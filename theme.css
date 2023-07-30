@@ -70,9 +70,35 @@ iframe {
     border-radius: 5px;
 }
 .left-col-list li {
+    display: flex;
+    align-items: center;
     padding: 5px;
     border-radius: 5px;
     transition: background-color 0.2s;
+}
+.left-col-list li div {
+    display: flex;
+    align-items: center;
+}
+.left-col-list li span {
+    color: #8c8e90;
+    transition: color 0.2s;
+}
+.left-col-list li a {
+    display: flex;
+    align-items: center;
+}
+.left-col-list li div svg {
+    color: #8c8e90;
+    transition: color 0.2s;
+}
+.left-col-list li:hover div svg {
+    color: #fff;
+    transition: color 0.2s;
+}
+.left-col-list li:hover span {
+    color: #fff;
+    transition: color 0.2;
 }
 .left-col-list li:hover {
     background-color: #2f3030;
