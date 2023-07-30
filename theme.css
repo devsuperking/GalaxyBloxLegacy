@@ -59,9 +59,14 @@
 .dark-theme .content {
     background-color: #222426;
 }
-/* .rbx-header {
-    height: 90px !important;
-} */
+.rbx-header {
+    height: 60px !important;
+    padding-top: 7.5px !important;
+    padding-bottom: 7.5px !important;
+}
+main {
+    margin: 60px auto 0 !important;
+}
 .ad {
     border-radius: 10px !important;
     display: none;
@@ -69,28 +74,24 @@
 iframe {
     border-radius: 5px;
 }
-.left-col-list li {
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    border-radius: 5px;
-    transition: background-color 0.2s;
+.simplebar-content, .simplebar-content-wrapper, .simplebar-wrapper, .simplebar-mask, .left-col-list, .rbx-scrollbar {
+    width: 100% !important;
 }
-.left-col-list li div {
-    display: flex;
-    align-items: center;
+.rbx-left-col ul {
+    padding: 10px !important;
 }
 .left-col-list li span {
     color: #8c8e90;
     transition: color 0.2s;
 }
+.left-col-list li div svg {
+    color: #8c8e90;
+    margin-right: 20px;
+    transition: color 0.2s;
+}
 .left-col-list li a {
     display: flex;
     align-items: center;
-}
-.left-col-list li div svg {
-    color: #8c8e90;
-    transition: color 0.2s;
 }
 .left-col-list li:hover div svg {
     color: #fff;
@@ -104,13 +105,57 @@ iframe {
     background-color: #2f3030;
     transition: background-color 0.2s;
 }
+.left-col-list li div {
+    display: flex;
+    align-items: center;
+}
+.left-col-list li {
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+.rbx-left-col {
+    flex-direction: column;
+    align-items: center;
+    width: 220px !important;
+    height: calc(100vh - 60px) !important;
+}
+@media (min-width: 1688px) {
+    .rbx-left-col {
+        display: flex !important;
+    }
+}
+
 .game-carousel {
     background-color: #191a1c;
-    padding: 15px;
+    box-sizing: border-box;
+    padding: 25px !important;
     border-radius: 15px;
+}
+#HomeContainer {
+    width: min-content !important;
+    max-width: 1000px !important;
+}
+.section.home-friends {
+    width: 100%;
+    height: 100%;
 }
 .people-list-container {
     background-color: #191a1c;
-    padding: 15px;
+    padding: 10px !important;
+    margin-bottom: 15px;
     border-radius: 15px;
+}
+@media (min-width: 992px) {
+    .rbx-left-col {
+        top: 60px !important;
+    }
+}
+#navigation > ul > li > a > span {
+    width: 40px !important;
+    height: 40px !important;
+    margin-right: 10px !important;
 }
