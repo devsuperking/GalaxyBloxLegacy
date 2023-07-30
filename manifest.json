@@ -1,0 +1,15 @@
+{
+    "manifest_version": 3,
+    "name": "Roblox Addons Ultimate",
+    "description": "Adds new Roblox UI.",
+    "version": "1.0",
+    "content_scripts": [
+        {
+            "css": ["theme.css"],
+            "js": ["script.js"],
+            "matches": [
+                "*://www.roblox.com/*"
+            ]
+        }
+    ]
+}
