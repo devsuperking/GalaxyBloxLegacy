@@ -21,4 +21,8 @@ setTimeout(() => {
 
     document.querySelector("#navigation > ul > li.rbx-divider").remove();
 
+    document.querySelector("#right-navigation-header > div.navbar-left.navbar-search.col-xs-5.col-sm-6.col-md-2.col-lg-3.shown > div > div").remove();
+
+    document.querySelector("#navbar-search-input").placeholder = "Type here to search...";
+
 }, 1000);
