@@ -127,10 +127,20 @@ iframe {
     }
 }
 .rbx-header .rbx-navbar li {
+    height: 40px;
     transition: background-color 0.2s;
 }
 .rbx-header .rbx-navbar li a {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
     color: #676b6b !important;
+}
+.rbx-header .rbx-navbar li a svg, .rbx-header .rbx-navbar li a span {
+    margin-right: 10px;
+}
+.rbx-header .rbx-navbar li a span {
+    filter: brightness(45%) !important;
 }
 .rbx-header .rbx-navbar li:hover {
     border-bottom: none !important;
@@ -146,7 +156,7 @@ iframe {
 }
 #HomeContainer {
     width: min-content !important;
-    max-width: 1000px !important;
+    max-width: 1600px !important;
 }
 .section.home-friends {
     width: 100%;
@@ -194,4 +204,11 @@ iframe {
 .game-card-link:hover {
     background-color: #222426;
     transition: background-color 0.2s; 
+}
+.avatar-card-image {
+    background-color: #1e2424 !important;
+    border-radius: 5px !important;
+}
+div.avatar.avatar-card-fullbody > span > thumbnail-2d > span > img {
+    background-color: #1e2424;
 }
