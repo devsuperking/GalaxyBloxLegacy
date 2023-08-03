@@ -1,15 +1,26 @@
 {
     "manifest_version": 3,
-    "name": "Roblox Addons Ultimate",
-    "description": "Adds new Roblox UI.",
+    "name": "MicroBlox",
+    "description": "Adds new Roblox Interface and upgrades roblox website.",
     "version": "1.0",
     "content_scripts": [
         {
-            "css": ["theme.css"],
-            "js": ["script.js"],
+            "css": ["css/global.css"],
+            "js": ["js/script.js"],
             "matches": [
                 "*://www.roblox.com/*"
             ]
         }
+    ],
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "storage"
     ]
 }
