@@ -1,14 +1,15 @@
 {
     "manifest_version": 3,
     "name": "MicroBlox",
-    "description": "Adds new Roblox Interface and upgrades roblox website.",
+    "description": "MicroBlox is an extension that extends the Roblox website with new possibilities. The extension adds new features to make the Roblox site more user-friendly.",
     "version": "1.0",
     "content_scripts": [
         {
-            "css": ["css/global.css"],
+            "css": ["css/global.css", "css/font.css"],
             "js": ["js/script.js"],
             "matches": [
-                "*://www.roblox.com/*"
+                "*://www.roblox.com/*",
+                "*://web.roblox.com/*"
             ]
         }
     ],
@@ -21,6 +22,7 @@
         "default_popup": "popup.html"
     },
     "permissions": [
-        "storage"
+        "storage",
+        "cookies"
     ]
 }

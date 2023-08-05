@@ -1,0 +1,144 @@
+body {
+    background-color: #222426;
+    font-family: 'Poppins';
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 600px;
+    width: 400px;
+    margin: 0;
+}
+.flexRow {
+    display: flex;
+}
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border-radius: 5px;
+    min-width: 140px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    background-color: #6b14dd;
+}
+g {
+    background: #FFD117;
+    background: linear-gradient(to right, #FFD117 0%, #FF8052 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.Banner {
+    background-image: url(https://cdn.discordapp.com/attachments/1136679259658788895/1136686360699351090/G5O8I5T.jpg);
+    background-size: cover;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 100px;
+}
+button:hover {
+    background-color: #8506fb;
+    transition: background-color 0.1s;
+}
+.darkContainer {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #313234;
+    margin-bottom: 20px;
+    width: 100%;
+}
+.darkContainer > button {
+    min-width: fit-content;
+    height: 25px;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+.ProductNotActivated, .ProductActivated {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+input {
+    padding: 7px;
+    background-color: #313234;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    color: white;
+    min-width: 120px;
+    height: 15px;
+}
+
+#activateButton {
+    height: 30px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+
+.notice {
+    background-color: rgb(100, 44, 190);
+    width: 100%;
+    min-height: 10px;
+    margin: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    border-left: solid 7px white;
+}
+
+.setup>div>.ver {
+    margin-left: auto;
+    color: #a5a5a5;
+}
+
+.setup>div>.copyright {
+    margin-right: auto;
+    color: #a5a5a5;
+}
+
+.notice.dark {
+    background-color: rgb(52, 52, 52);
+}
+
+.notice a {
+    color: rgb(39, 144, 243) !important;
+}
+
+.sm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #313234;
+    padding: 4px;
+    border-radius: 5px;
+    margin: 5px;
+    transition: background-color 0.1s;
+    cursor: pointer;
+}
+.sm:hover {
+    background-color: #424346;
+    transition: background-color 0.1s;
+}
+.sm img {
+    margin-right: 6px;
+}
+.sm-c {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+.row {
+    display: flex;
+}
+a {
+    color: white;
+    text-decoration: none;
+}

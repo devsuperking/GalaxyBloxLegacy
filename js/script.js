@@ -1,58 +1,110 @@
-chrome.storage.local.get(["ready"]).then((i) => {
+const API_URL = "https://superking.pythonanywhere.com"
 
-    if (i["ready"] == undefined || i["ready"] == null) {
+const data = JSON.stringify({
+    'themeType': 'Dark'
+});
 
-        const setup = document.createElement("div");
-        const username = document.querySelector('.text-overflow.age-bracket-label-username.font-caption-header').textContent;
+let xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+xhr.open('PATCH', 'https://accountsettings.roblox.com/v1/themes/1/0');
+xhr.setRequestHeader('accept', 'application/json');
+xhr.setRequestHeader('Content-Type', 'application/json');
 
-        function SubmitKey() {
-            chrome.storage.local.set({"ready": true}).then(() => {
-                document.querySelector(".setup").classList.add("fadeOut");
-                setTimeout(() => {
-                    setup.remove();
-                    document.body.style.overflow = "auto";
-                }, 200);
-            });
-        }
+xhr.send(data);
 
-        setup.className = "setup";
-        setup.innerHTML = `<div><p class="ver">Version: 1.2.1</p><div class="notice">You can get your key on our <a href="https://discord.gg/2eJKfaAPmK" target="_blank">Discord Server</a></div><img src="https://cdn.discordapp.com/attachments/1023265697293406320/1136623207168888872/1goas94.png" width="68px" height="68px"/><h1>Let's configure your <g><strong>Roblox Experience</strong></g></h1><input placeholder="Enter your key" type="password"><div class="buttonContainer"></div><div class="notice dark"><h3>Additional info</h3><p>・MicroBlox only supports dark theme. It will be changed automatically.<br>・You can donate us, <a href="https://www.buymeacoffee.com/microplay" target="_blank">by buying us a coffee</a>.</p></div><p class="copyright">Copyright ©️ Microplay Interactive Enterianment Studios 2023. All rights reserved.</p></div>`
+if (document.body.classList.contains("light-theme")) {
+
+    // const div = document.createElement("div");
+    // document.body.style.overflow = "hidden";
+    // div.className = "setup";
+    // div.innerHTML = "<div><h1>Warning! You are using light theme</h1><p>Consider changing your theme to dark.</p><button>OK</button></div>"
+
+    // document.getElementsByTagName("html")[0].insertBefore(div, document.getElementsByTagName("html")[0].firstChild);
+
+    document.body.classList.remove("light-theme")
+    document.body.classList.add("dark-theme")
+    document.getElementById("navigation-container").classList.remove("light-theme")
+    document.getElementById("navigation-container").classList.add("dark-theme")
+}
+
+chrome.storage.local.get(["key"]).then((i) => {
+
+    fetch("https://superking.pythonanywhere.com/key/fetch?key=" + i["key"]).then((res) => {
+        res.text().then((data) => {
+            if (i["key"] == undefined || i["key"] == null || data == "404") {
         
-        const button = document.createElement("button");
-        button.textContent = `Link account (${username})`
-        button.onclick = SubmitKey;
+                const setup = document.createElement("div");
+                const username = document.querySelector('.text-overflow.age-bracket-label-username.font-caption-header').textContent;
+        
+                function ShowError(text) {
+                    document.getElementById("error-container").style.display = "block";
+                    document.getElementById("error-text").textContent = text;
+                }
+        
+                function SubmitKey() {
+        
+                    const key = document.getElementById("keyInput").value;
+        
+                    fetch(API_URL + "/key/use?key=" + key).then((json) => {
+                        json.json().then((res) => {
+                            console.log(res)
+                            if (res["used"] == true) {
+                                chrome.storage.local.set({ "key": key }).then(() => {
+                                    document.querySelector(".setup").classList.add("fadeOut");
+                                    setTimeout(() => {
+                                        setup.remove();
+                                        document.body.style.overflow = "auto";
+                                    }, 200);
+                                });
+                            } else if (res == "606") {
+                                ShowError("The key has been already used.")
+                            } else if (res == "404") {
+                                ShowError("The key does not exist.")
+                            }
+                        })
+                    });
+                }
+                setup.className = "setup";
+                setup.innerHTML = `<div><p class="ver">Version: 1.2.1</p><div class="notice">You can get your key on our <a href="https://discord.gg/2eJKfaAPmK" target="_blank">Discord Server</a></div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="68px" height="68px"/><h1>Let's configure your <g><strong>Roblox Experience</strong></g></h1><input id="keyInput" placeholder="Enter your key" type="password"><div class="buttonContainer"></div><div class="notice dark" id="error-container" style="display: none;"><p id="error-text"></p></div><div class="notice dark"><h3>Additional info</h3><p>・MicroBlox only supports dark theme. It will be changed automatically.<br>・You can donate us, <a href="https://www.buymeacoffee.com/microplay" target="_blank">by buying us a coffee</a>.</p></div><p class="copyright">Copyright ©️ Microplay Interactive Enterianment Studios 2023. All rights reserved.</p></div>`
+        
+                const button = document.createElement("button");
+                button.textContent = `Link account (${username})`
+                button.onclick = SubmitKey;
+        
+                document.getElementsByTagName("html")[0].insertBefore(setup, document.getElementsByTagName("html")[0].firstChild);
+                document.querySelector(".buttonContainer").appendChild(button);
+        
+                document.body.style.overflow = "hidden";
+        
+            } else {
+                const loading = document.createElement("div");
+                loading.className = "mb-loading";
+                loading.innerHTML = "<img src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTExLjY3NiAwTDAgNDQuMTY2IDQzLjU3NyA1NmwxMS42NzYtNDQuMTY2TDExLjY3NiAwem0yMC40MDkgMzUuODI3bC0xMi4xNzctMy4zMDggMy4yNjQtMTIuMzQyIDEyLjE4MiAzLjMwOC0zLjI3IDEyLjM0MnoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=' width='100px' height='100px'/>";
+                document.getElementsByTagName("html")[0].insertBefore(loading, document.getElementsByTagName("html")[0].firstChild);
+                document.body.style.overflow = "hidden";
+        
+                setTimeout(() => {
+                    loading.classList.add("fadeOut");
+                    setTimeout(() => {
+                        loading.remove();
+                        document.body.style.overflow = "auto";
+                    }, 200);
+                }, 2000);
+            }
+        });
+    });
 
-        document.getElementsByTagName("html")[0].insertBefore(setup, document.getElementsByTagName("html")[0].firstChild);
-        document.querySelector(".buttonContainer").appendChild(button);
-
-        document.body.style.overflow = "hidden";
-
-    } else {
-        const loading = document.createElement("div");
-        loading.className = "loading";
-        loading.innerHTML = "<img src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTExLjY3NiAwTDAgNDQuMTY2IDQzLjU3NyA1NmwxMS42NzYtNDQuMTY2TDExLjY3NiAwem0yMC40MDkgMzUuODI3bC0xMi4xNzctMy4zMDggMy4yNjQtMTIuMzQyIDEyLjE4MiAzLjMwOC0zLjI3IDEyLjM0MnoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=' width='100px' height='100px'/>";
-        document.getElementsByTagName("html")[0].insertBefore(loading, document.getElementsByTagName("html")[0].firstChild);
-        document.body.style.overflow = "hidden";
-
-        setTimeout(() => {
-            loading.classList.add("fadeOut");
-            setTimeout(() => {
-                loading.remove();
-                document.body.style.overflow = "auto";
-            }, 200);
-        }, 2000);
-    }
 });
 
 setTimeout(() => {
-    
+
     document.querySelector("#nav-home > div").innerHTML = '<svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z"></path></svg>';
     document.querySelector("#nav-profile > div").innerHTML = '<div><svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M18.39 14.56C16.71 13.7 14.53 13 12 13s-4.71.7-6.39 1.56C4.61 15.07 4 16.1 4 17.22V18c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-.78c0-1.12-.61-2.15-1.61-2.66zM9.78 12h4.44c1.21 0 2.14-1.06 1.98-2.26l-.32-2.45C15.57 5.39 13.92 4 12 4S8.43 5.39 8.12 7.29L7.8 9.74c-.16 1.2.77 2.26 1.98 2.26z"></path></svg></div>';
     document.querySelector("#nav-message > div").innerHTML = '<div><svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M20 6h-1v8c0 .55-.45 1-1 1H6v1c0 1.1.9 2 2 2h10l4 4V8c0-1.1-.9-2-2-2zm-3 5V4c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v13l4-4h9c1.1 0 2-.9 2-2z"></path></svg></div>';
     document.querySelector("#nav-friends > div:nth-child(1)").innerHTML = '<div><svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M16.67 13.13C18.04 14.06 19 15.32 19 17v3h3c.55 0 1-.45 1-1v-2c0-2.18-3.57-3.47-6.33-3.87z"></path><circle cx="9" cy="8" r="4" fill-rule="evenodd"></circle><path fill-rule="evenodd" d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4c-.47 0-.91.1-1.33.24C14.5 5.27 15 6.58 15 8s-.5 2.73-1.33 3.76c.42.14.86.24 1.33.24zm-6 1c-2.67 0-8 1.34-8 4v2c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-2c0-2.66-5.33-4-8-4z"></path></svg></div>';
 
     document.querySelector("#nav-character > div").innerHTML = '<div><svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M20.75 6.99c-.14-.55-.69-.87-1.24-.75-2.38.53-5.03.76-7.51.76s-5.13-.23-7.51-.76c-.55-.12-1.1.2-1.24.75-.14.56.2 1.13.75 1.26 1.61.36 3.35.61 5 .75v12c0 .55.45 1 1 1s1-.45 1-1v-5h2v5c0 .55.45 1 1 1s1-.45 1-1V9c1.65-.14 3.39-.39 4.99-.75.56-.13.9-.7.76-1.26zM12 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path></svg></div>';
-    
+
     document.querySelector("#nav-inventory > div").innerHTML = '<div><svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M20 8v12c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V8c0-1.86 1.28-3.41 3-3.86V3.5C7 2.67 7.67 2 8.5 2s1.5.67 1.5 1.5V4h4v-.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v.64c1.72.45 3 2 3 3.86zM6 13c0 .55.45 1 1 1h9v1c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1H7c-.55 0-1 .45-1 1z"></path></svg></div>';
 
     document.querySelector("#nav-trade > div").innerHTML = '<div><svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 7h10v1.79c0 .45.54.67.85.35l2.79-2.79c.2-.2.2-.51 0-.71l-2.79-2.79c-.31-.31-.85-.09-.85.36V5H6c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1V7zm10 10H7v-1.79c0-.45-.54-.67-.85-.35l-2.79 2.79c-.2.2-.2.51 0 .71l2.79 2.79c.31.31.85.09.85-.36V19h11c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v3z"></path></svg></div>';
@@ -88,6 +140,40 @@ setTimeout(() => {
     if (document.getElementById("Leaderboard-Abp") != undefined) {
         document.getElementById("Leaderboard-Abp").remove();
     }
+
+    try {
+        document.querySelector(".scroller.next").remove();
+        document.querySelector(".scroller.prev").remove();
+    } catch {}
+
+    document.querySelectorAll('.horizontal-scroller.games-list').forEach((scrollContainer) => {
+        scrollContainer.addEventListener('wheel',function (event) {
+            //only vertical scroll
+            event.preventDefault();
+            if (event.deltaY > 0) { 
+                smoothScroll(scrollContainer, 100, 100)
+            } else {
+                smoothScroll(scrollContainer, 100, 100)
+            }
+          });
+          function smoothScroll (domElement,pixel,delay) {
+            const intervalToRepeat = 25;
+            const step = (intervalToRepeat * pixel) / delay;
+            if (step < pixel)
+            {
+                domElement.scrollLeft += step;
+                setTimeout(function (){
+                    smoothScroll(domElement,pixel - step,delay)
+              }, intervalToRepeat);
+            } else {
+                domElement.scrollLeft -= step;
+                setTimeout(function (){
+                    smoothScroll(domElement,pixel - step,delay)
+              }, intervalToRepeat);
+            }
+          }
+    });
+    
 
 }, 1000);
 
