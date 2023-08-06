@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "MicroBlox",
-    "description": "MicroBlox is an extension that extends the Roblox website with new possibilities. The extension adds new features to make the Roblox site more user-friendly.",
+    "description": "MicroBlox is an extension that extends the Roblox website with new possibilities. Created by Microplay Interactive.",
     "version": "1.0",
     "content_scripts": [
         {
@@ -22,7 +22,6 @@
         "default_popup": "popup.html"
     },
     "permissions": [
-        "storage",
-        "cookies"
+        "storage"
     ]
 }

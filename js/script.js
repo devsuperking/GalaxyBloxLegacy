@@ -1,16 +1,8 @@
 const API_URL = "https://superking.pythonanywhere.com"
-
-const data = JSON.stringify({
-    'themeType': 'Dark'
-});
-
-let xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
-xhr.open('PATCH', 'https://accountsettings.roblox.com/v1/themes/1/0');
-xhr.setRequestHeader('accept', 'application/json');
-xhr.setRequestHeader('Content-Type', 'application/json');
-
-xhr.send(data);
+const username = document.querySelector('.text-overflow.age-bracket-label-username.font-caption-header').textContent;
+const CEO = username == "@DevSuperKing" || username == "@KERTONCZOKO";
+const uid = document.querySelector("#right-navigation-header > div.navbar-right.rbx-navbar-right > ul > div > a").href;
+var userBanned = false;
 
 if (document.body.classList.contains("light-theme")) {
 
@@ -27,74 +19,89 @@ if (document.body.classList.contains("light-theme")) {
     document.getElementById("navigation-container").classList.add("dark-theme")
 }
 
-chrome.storage.local.get(["key"]).then((i) => {
-
-    fetch("https://superking.pythonanywhere.com/key/fetch?key=" + i["key"]).then((res) => {
-        res.text().then((data) => {
-            if (i["key"] == undefined || i["key"] == null || data == "404") {
-        
-                const setup = document.createElement("div");
-                const username = document.querySelector('.text-overflow.age-bracket-label-username.font-caption-header').textContent;
-        
-                function ShowError(text) {
-                    document.getElementById("error-container").style.display = "block";
-                    document.getElementById("error-text").textContent = text;
-                }
-        
-                function SubmitKey() {
-        
-                    const key = document.getElementById("keyInput").value;
-        
-                    fetch(API_URL + "/key/use?key=" + key).then((json) => {
-                        json.json().then((res) => {
-                            console.log(res)
-                            if (res["used"] == true) {
-                                chrome.storage.local.set({ "key": key }).then(() => {
-                                    document.querySelector(".setup").classList.add("fadeOut");
-                                    setTimeout(() => {
-                                        setup.remove();
-                                        document.body.style.overflow = "auto";
-                                    }, 200);
-                                });
-                            } else if (res == "606") {
-                                ShowError("The key has been already used.")
-                            } else if (res == "404") {
-                                ShowError("The key does not exist.")
-                            }
-                        })
-                    });
-                }
-                setup.className = "setup";
-                setup.innerHTML = `<div><p class="ver">Version: 1.2.1</p><div class="notice">You can get your key on our <a href="https://discord.gg/2eJKfaAPmK" target="_blank">Discord Server</a></div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="68px" height="68px"/><h1>Let's configure your <g><strong>Roblox Experience</strong></g></h1><input id="keyInput" placeholder="Enter your key" type="password"><div class="buttonContainer"></div><div class="notice dark" id="error-container" style="display: none;"><p id="error-text"></p></div><div class="notice dark"><h3>Additional info</h3><p>・MicroBlox only supports dark theme. It will be changed automatically.<br>・You can donate us, <a href="https://www.buymeacoffee.com/microplay" target="_blank">by buying us a coffee</a>.</p></div><p class="copyright">Copyright ©️ Microplay Interactive Enterianment Studios 2023. All rights reserved.</p></div>`
-        
-                const button = document.createElement("button");
-                button.textContent = `Link account (${username})`
-                button.onclick = SubmitKey;
-        
-                document.getElementsByTagName("html")[0].insertBefore(setup, document.getElementsByTagName("html")[0].firstChild);
-                document.querySelector(".buttonContainer").appendChild(button);
-        
-                document.body.style.overflow = "hidden";
-        
-            } else {
-                const loading = document.createElement("div");
-                loading.className = "mb-loading";
-                loading.innerHTML = "<img src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTExLjY3NiAwTDAgNDQuMTY2IDQzLjU3NyA1NmwxMS42NzYtNDQuMTY2TDExLjY3NiAwem0yMC40MDkgMzUuODI3bC0xMi4xNzctMy4zMDggMy4yNjQtMTIuMzQyIDEyLjE4MiAzLjMwOC0zLjI3IDEyLjM0MnoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=' width='100px' height='100px'/>";
-                document.getElementsByTagName("html")[0].insertBefore(loading, document.getElementsByTagName("html")[0].firstChild);
-                document.body.style.overflow = "hidden";
-        
-                setTimeout(() => {
-                    loading.classList.add("fadeOut");
-                    setTimeout(() => {
-                        loading.remove();
-                        document.body.style.overflow = "auto";
-                    }, 200);
-                }, 2000);
-            }
-        });
+fetch(API_URL + "/users/fetch?user=" + uid).then((res) => {
+    res.json().then((data) => {
+        if (data["banned"] == true) {
+            userBanned = true;
+            const banContainer = document.createElement("div");
+            banContainer.classList.add("setup");
+            banContainer.classList.add("ban-container");
+            banContainer.innerHTML = "<div><img src='https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png' width='80px' height='80px'><h1>You are banned from MicroBlox</h1><div class='display-block'>Please contact us on our <a href='https://discord.gg/PgwJ8An8Jh' target='_blank'>Discord server</a> to get unban.</div></div>"
+            document.body.style.overflow = "hidden";
+            document.getElementsByTagName("html")[0].insertBefore(banContainer, document.getElementsByTagName("html")[0].firstChild);
+        }
     });
+})
 
-});
+if (!userBanned) {
+    chrome.storage.local.get(["key"]).then((i) => {
+    
+        fetch("https://superking.pythonanywhere.com/key/fetch?key=" + i["key"]).then((res) => {
+            res.text().then((data) => {
+                if (i["key"] == undefined || i["key"] == null || data == "404") {
+            
+                    const setup = document.createElement("div");
+            
+                    function ShowError(text) {
+                        document.getElementById("error-container").style.display = "block";
+                        document.getElementById("error-text").textContent = text;
+                    }
+            
+                    function SubmitKey() {
+            
+                        const key = document.getElementById("keyInput").value;
+            
+                        fetch(API_URL + "/key/use?key=" + key).then((json) => {
+                            json.json().then((res) => {
+                                console.log(res)
+                                if (res["used"] == true) {
+                                    chrome.storage.local.set({ "key": key }).then(() => {
+                                        document.querySelector(".setup").classList.add("fadeOut");
+                                        setTimeout(() => {
+                                            setup.remove();
+                                            document.body.style.overflow = "auto";
+                                        }, 200);
+                                    });
+                                } else if (res == "606") {
+                                    ShowError("The key has been already used.")
+                                } else if (res == "404") {
+                                    ShowError("The key does not exist.")
+                                }
+                            })
+                        });
+                    }
+                    setup.className = "setup";
+                    setup.innerHTML = `<div><p class="ver">Version: 1.2.1</p><div class="notice">You can get your key on our <a href="https://discord.gg/2eJKfaAPmK" target="_blank">Discord Server</a></div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="68px" height="68px"/><h1>Let's configure your <g><strong>Roblox Experience</strong></g></h1><input id="keyInput" placeholder="Enter your key" type="password"><div class="buttonContainer"></div><div class="notice dark" id="error-container" style="display: none;"><p id="error-text"></p></div><div class="notice dark"><h3>Additional info</h3><p>・MicroBlox only supports dark theme. It will be changed automatically.<br>・You can donate us, <a href="https://www.buymeacoffee.com/microplay" target="_blank">by buying us a coffee</a>.</p></div><p class="copyright">Copyright ©️ Microplay Interactive Enterianment Studios 2023. All rights reserved.</p></div>`
+            
+                    const button = document.createElement("button");
+                    button.textContent = `Link account (${username})`
+                    button.onclick = SubmitKey;
+            
+                    document.getElementsByTagName("html")[0].insertBefore(setup, document.getElementsByTagName("html")[0].firstChild);
+                    document.querySelector(".buttonContainer").appendChild(button);
+            
+                    document.body.style.overflow = "hidden";
+            
+                } else {
+                    const loading = document.createElement("div");
+                    loading.className = "mb-loading";
+                    loading.innerHTML = "<img src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTExLjY3NiAwTDAgNDQuMTY2IDQzLjU3NyA1NmwxMS42NzYtNDQuMTY2TDExLjY3NiAwem0yMC40MDkgMzUuODI3bC0xMi4xNzctMy4zMDggMy4yNjQtMTIuMzQyIDEyLjE4MiAzLjMwOC0zLjI3IDEyLjM0MnoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=' width='100px' height='100px'/>";
+                    document.getElementsByTagName("html")[0].insertBefore(loading, document.getElementsByTagName("html")[0].firstChild);
+                    document.body.style.overflow = "hidden";
+            
+                    setTimeout(() => {
+                        loading.classList.add("fadeOut");
+                        setTimeout(() => {
+                            loading.remove();
+                            document.body.style.overflow = "auto";
+                        }, 200);
+                    }, 2000);
+                }
+            });
+        });
+    
+    });
+}
 
 setTimeout(() => {
 
@@ -174,7 +181,42 @@ setTimeout(() => {
           }
     });
     
+    if (window.location.pathname.startsWith("/users/4186880529") || window.location.pathname.startsWith("/users/651306060")) {
+        const div = document.createElement("div");
+        div.innerHTML = `<div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="40px" height="40px">CEO of MicroBlox</div>`;
+        div.classList = "mb-popup"
 
+        document.querySelector(".profile-header-top").appendChild(div);
+    } else if (window.location.pathname.startsWith("/users/")) {
+        const userID = window.location.pathname.split("/")[2]
+        const div = document.createElement("div");
+        div.innerHTML = `<div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="40px" height="40px">Admin menu </div>`;
+        const button = document.createElement("button");
+
+        fetch(API_URL + "/users/fetch?user=" + userID).then((res) => {
+            res.text().then((data) => {
+                if (data == "404" || JSON.parse(data)["banned"] == false) {
+                    button.textContent = "Ban from MicroBlox"
+                    button.style.marginLeft = "10px";
+                    button.addEventListener("click", () => {
+                        const reason = prompt("Type reason.")
+                        fetch(API_URL + `/users/ban?user=${userID}&reason=${reason == null ? "Not specified" : reason}`);
+                        window.location.reload();
+                    });
+                } else if (JSON.parse(data)["banned"] == true) {
+                    button.textContent = "Unban from MicroBlox"
+                    button.style.marginLeft = "10px";
+                    button.addEventListener("click", () => {
+                        fetch(API_URL + "/users/unban?user=" + userID);
+                        window.location.reload();
+                    });
+                }
+                div.append(button);
+                div.classList = "mb-popup"
+                document.querySelector(".profile-header-top").appendChild(div);
+            });
+        });
+    }
 }, 1000);
 
 setTimeout(() => {
