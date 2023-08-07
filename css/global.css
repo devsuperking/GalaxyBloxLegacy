@@ -236,8 +236,11 @@ li.rbx-upgrade-now {
     display: flex !important;
     align-items: center;
 }
-
+.game-cards {
+    height: min-content !important;
+}
 .game-card-link {
+    cursor: default;
     padding: 10px;
     border-radius: 10px;
     height: 280px !important;
@@ -256,6 +259,7 @@ li.rbx-upgrade-now {
 }
 .game-card {
     width: min-content !important;
+    height: min-content !important;
 }
 
 .btn-common-play-game-lg.min:hover:first-child {
@@ -268,11 +272,17 @@ li.rbx-upgrade-now {
     transition: background-color 0.2s;
 }
 
-.avatar-card-image {
+.avatar-card-image:not(.mb-avatar) {
     background-color: #1e2424 !important;
     border-radius: 5px !important;
 }
-.avatar-card-image.mb {
+.mb-avatar {
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+.img.ng-scope.ng-isolate-scope.mb {
     border-radius: 0 !important;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -296,12 +306,12 @@ div.avatar.avatar-card-fullbody>span>thumbnail-2d>span>img {
     transition: background-color 0.1s;
 }
 
-a {
-    transition: color 0.1s;
+a[target="_blank"] {
+    color: #d1d1d1 !important;
 }
 
-a:hover {
-    transition: color 0.1s;
+a[target="_blank"]:hover {
+    color: #fff !important;
 }
 
 #horizontal-tabs {
@@ -391,7 +401,7 @@ a:hover {
     background-color: #202020 !important;
 }
 
-img.ng-scope.ng-isolate-scope {
+img.ng-scope.ng-isolate-scope:not(.mb) {
     border-radius: 5px;
 }
 
@@ -414,7 +424,12 @@ img.ng-scope.ng-isolate-scope {
     min-height: 30px;
     transition: filter 0.3s !important;
 }
-
+/* a *, button * {
+    cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABNhJREFUWEe9139MlHUcB/D35zk4nrsUQUBBREnTDs4ipS3dtEY2NBFLClKJpasUf4cmLQ1DbRVuVtPcauli+dgCNLRDSQ25/MlUNIf5aw42fih4yCGKjxx3z6c9uN2hu4MLkfvz++Pzed33u+/3830IHn7Fs3guMdYwMIwI/zgUrErIpyOexve0ndxN/DOZ0xTCL9flK6i6exbPBUzmAdpBbXYbxicW0vmeJnM3zy1g/zt8oa71ijHn4gw4uB0BvqG89vkS0pIuN6GA5j1xgCmZ5WM3d4r51VnOXJlRRRiqjzIn7hLinjhg79ssH7NI4q7qtc5cK6NMGKo3mt/cRU8esPstlk9YJPH3GhdghcGEcL3RnLS7DwAFSSyftEhiYa0LsPxZE8J1RnNyYR8A8mayXGaRxD11LsCy0Q8AKXv6ALDzDZZP3ZLEPzoBFo8yYYjOaJ6ztw8AOxJZPtUkiUXXXSuw8BkTwkSjOc3UB4Dc6SyfbpLE/TdcgPkjTQgVjeZ5RX0A2D6N5XKrJBbXuwAfPN0BYAYqWcE2xYJNC8qp/XHvBOdNmJ/M2roWBGUcQP1Pr+OeCjjQ4ALEhWRCQ34I143DEF0MGChmBZ8So+3GQVzNBik9wXQAtsZzhkBYx0B/AFUEDDvXLGkO3XQBOgefMHAJJgavcDUR6ljBJ4sP0s7/i6Ct8ZyqMKQa+RRX3ztKY/xTMMA3AudvSyixuAeoSV4NXs8W27/kS3oY/ZMxyM/AzFjdDuxrseNStpns3mDou8l8xtpeFSvVTIECO0K00UgdWsTnWyQqbfQM6Bxc3ZqksF95iDj2wZYSLKxgQ8Zh2tIdgjbFsVzRIol/N7mSpYYfRK1chs5t3QUK8jUgVIwBQQNDvySE+o0DM7742EyuiuYmCG18heULd3aIR62fO7snBq6FAB8csXq3Ao/GJQiID/4eI/RTHRoHolceo6ue/gB9NYkv194/Pnp/Y5rzRAzWxmKEPoFPNq93+17objXUfn/NcMwKK4V6UlYfp689AjZM4Fw7Wt+T6mOhwOYcJwpBuK/c8iaXxzFzBp+GKAT9lnWCZnsEZI/nFBDySq0LUN126LESPjp5RtA+BPpElWSX0WueAZEsKiG4UddeGnD49vu9Cwg8BH/NyOINp2maR4Da8dmL/I0CJWOfdSpalGu9glBPQ8rACggQt31ZTh92CVgTw+GKBtdqbAfE460LewUQrInF5P4FYEJ6zln6sUuA2rkqhnMAZB5tnYsGx+M//8eK6zFS+66DBAzbeI6udwtYFML9dINQIaM+suTedNjQ1OOV0FEY4vUl0EDcs+kCzewq0EPnPCOaJzHjcKNS5nPSNvehY+m9hvCS7zaEauLaiRH77WWq8BqgDlxu4CXM2NKg/IUz9qVQ0OZ9bgAGIROjfNLVerBu82XK7m6y25tu2SjOUhjrmnGOyh1LcR8et9AZX4AW0UIWhlMqCMgPuobZ3rwRPF61iyN5PgRstuOuXxX/jFrkQXYDEeCLwZiC0fQRnsIINfn24EqkZ8PLctzVEqVH8BhBg80MdHwNtaISd3AJNlg7aq4eEQigsfBh9R2Daias+qGK8rtb9s79XhWbRZH8AhhJCvAyMwxEGAhAfYDUEXCGGYVN/bG74CK5iomXiv8AJX/fMDNo+wAAAAAASUVORK5CYII=") 8 1, pointer !important;
+}
+*, body {
+    cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABNFJREFUWEe91XtQVHUUB/DvuXvvsq7Csq5AgKn4zHRIJ7XR7OE4iJMIrg/MqbTGJgUfTY2WOmPiIxsdtUwD09q44VgOSpoYSSWiQIiS4ZNMR51UENAFZdnZvbt7mispYTncRfH3387vnPP9zO/+7l3KmcTTScBaJlR4GC+P3U5leISLciZz7eWGclOQFIpAqaPd50Vc3A4qelQGyk5kzqu0oaBqG2b3yYA5INzhZUxMyKQfHwWCvp/EfOCaDd/9tQJmfQRm9c7gEEOUQsDUsZm0va0RtGsic/41G3ZdXnE7q4NowYxe6Xjc2M/r8yHZmkWb2xJBWROYD1bZsPsfgBpmEAIxvccW9AgcwkxYOH4HrWorBGVamQ9V27DnSuMJ3FkSGfBq1GfoGzQCYKyetIvebwsEfWtlb2GVTci+2hyghgkQkdhlDQaY4yEQtrCIpMRM8j5MCG1LYKWw2ib+UPFfQGMQIT4yBUMsr4GBHXo9XknMJPfDQtDWeFaKamxizn0BjVEjw97F8yGzQUBuMGAdu4caHgaC0uNYKb7+pbiv8sMW5w21TEdM2CL1VIqcQFzyXrK32NRCAX3xEitHbshi7rWlmmZFmyYiLmKlej+Oe7wYPWMfVWhqvE8RfT6alVK7LP5UpQ2gzundYRQSItdDh4Dzbh9i5uTShdYiKDWWld/ssvhLtXaAGtbVOAzjIzazKBgriBGblEsnW4OgDTGsHKuVxbwa/wBqWHjAU7BG2mAQzNeJMGZ2Lh32F0Efj2SlrE4W86/7D1DDOkq9YA3/GoFSWL3bA+v8A/SzPwhaM4KV4zdl8dCN1gHUsCCxM+LDMhAsdXX5gMnz82i3VgStfoGVE7dkscDeeoAa1l4XjvjQrQiWomrey6cQzYCVz7Fyql4Wi2q1A4J03dDLaMVjAU/DJHZHO50FAkmNmYzyRQXUVzNg+TBWTjtksfimNkC4fihiLenQQWIGyolwmoFKMOrBcIiMjIXFdFEzIGUoK2ccslhySxugu2EchpvWQQCSlxRTmtag+9XR4iGs/OGUxSP1TYAI/YuIChgHoxCKMsd6VHma3i4BelgtB9W9omUl9OwDAxYNYuWsUxZLG5YiSOiJZzqsRCdxkDq3DoDvpveceW9d7O2He2f1MyQj2jgP7MXwj36nwgdB0IKBrJx1yaLdcwqDjMugEwy3wFjqqkaqZME0QUDaIcebuKrsv5ujJxPiTYUQYMxadYwmPBBgfjRXurk2TC8Eq3+1xW4XpnxS3niJ3unM7SQLLlV5DofkN0xpljPA8AF66l/3utzo++kZ+rO1CJrXn8eAsBjAry4nFmw4R65/D5vXn1MYWLLfmYBa34m7W+2pM0YZ80DQbVp7kpJaDWipcU5PDtFJuHTFl93uqHtus/LB+g2IEMY4G+rQZfNVqmlp1v/tk5amuX04jeGduV8ZgQa+fLfFTAN5uLSTfIxZG89SqpZZ99ZoAsx6gnuTB2cu8lfCKd/ypssIM2J0pervlI3nSNuH5B6BJoDak9ydd/rgHF/C02DHUfXZ40lajK6YCi9h5Kbz1PSa+HEUmgEzu3E3YhSAONJBFyCxCXpY1DcnPfUiveFHZrNSzQC1660I7qST8DYzBoNQT0BW2iV8A1DTV8pPyd9eCccwipqHYQAAAABJRU5ErkJggg==") 8 1, pointer !important;
+} */
 .btn-common-play-game-lg.min {
     display: flex;
     align-items: center;
@@ -422,7 +437,6 @@ img.ng-scope.ng-isolate-scope {
     height: 30px !important;
     min-width: 100% !important;
 }
-
 .btn-common-play-game-lg:hover {
     filter: hue-rotate(30deg);
     transition: filter 0.3s !important;
@@ -438,7 +452,9 @@ img.ng-scope.ng-isolate-scope {
     border-radius: 15px;
     margin-top: 10px !important;
 }
-
+.section-content {
+    height: min-content;
+}
 .card-item,
 .badge-row {
     border-radius: 10px;
@@ -625,15 +641,6 @@ input {
     color: rgb(39, 144, 243) !important;
 }
 
-a {
-    transition: filter 0.2s
-}
-
-a:hover {
-    filter: brightness(120%);
-    transition: filter 0.2s;
-}
-
 .buttonContainer>button {
     margin: 15px !important;
     padding: 5px;
@@ -676,8 +683,109 @@ a:hover {
 
 .display-block {
     display: block;
+    text-align: center;
 }
 
 .ban-container div a {
     color: #0095ff;
+}
+
+.mb-banner {
+    user-select: none;
+    border-radius: 5px;
+    width: 100%;
+    height: 200px;
+    transform: translateY(10px);
+}
+.mb-banner img {
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.mb-banner div:not(.mb-b) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 10px;
+    margin-top: 10px;
+    z-index: 100;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #1f1f1f;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+.mb-banner div.prev {
+    margin: 0;
+    left: 0;
+    top: 70px;
+    margin-left: 10px;
+}
+.mb-banner div.next {
+    margin: 0;    
+    right: 0;
+    top: 70px;
+    margin-right: 10px;
+}
+.mb-banner div:hover {
+    background-color: #2e2e2e;
+    transition: background-color 0.1s;
+}
+.badge-list > li > a > span > img  {
+    background-color: transparent !important;
+}
+.badge-list li a span {
+    background-color: transparent !important;
+}
+.list-item.asset-item {
+    background-color: inherit !important;
+    border-radius: 15px;
+    height: min-content;
+    margin: 5px;
+    transition: background-color 0.1s;
+}
+.list-item.asset-item:hover {
+    background-color: #28292a !important;
+    transition: background-color 0.1s;
+}
+.setup > div > .section.profile-header, .setup > div > .section.profile-header > .section-content {
+    width: 100%;
+    background-color: #232323 !important;
+    color: white;
+}
+html > div > div > div.section.profile-header > div > div.header-caption > div > div.profile-display-name.font-caption-body.text.text-overflow {
+    color: white !important;
+}
+button.primary {
+    padding: 10px;
+    min-width: 220px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+    background: rgb(152,27,213);
+    background: linear-gradient(274deg, rgba(152,27,213,1) 0%, rgba(136,0,255,1) 100%);
+    filter: brightness(100%);
+    transition: filter 0.1s;
+}
+button.primary:hover {
+    filter: brightness(120%);
+    transition: filter 0.1s;
+}
+.mb-banner.prev {
+    width: 642.4px !important;
+}
+.mb-banner .mb-b {
+    width: 100%;
+    height: 100%;
+}
+.content .gb-content {
+    text-align: center;
+    padding: 10px;
+    background-color: #1f1f1f;
+    border-radius: 5px;
 }

@@ -1,8 +1,7 @@
 const API_URL = "https://superking.pythonanywhere.com"
 const username = document.querySelector('.text-overflow.age-bracket-label-username.font-caption-header').textContent;
 const CEO = username == "@DevSuperKing" || username == "@KERTONCZOKO";
-const uid = document.querySelector("#right-navigation-header > div.navbar-right.rbx-navbar-right > ul > div > a").href;
-var userBanned = false;
+const uid = document.querySelector("#right-navigation-header > div.navbar-right.rbx-navbar-right > ul > div > a").href.split('/')[4];
 
 if (document.body.classList.contains("light-theme")) {
 
@@ -19,89 +18,90 @@ if (document.body.classList.contains("light-theme")) {
     document.getElementById("navigation-container").classList.add("dark-theme")
 }
 
+chrome.storage.local.get(["cursor"]).then((i) => {
+    console.log(i)
+    if (i["cursor"] == true || i["cursor"] == undefined || i["cursor"] == null) {
+        document.head.insertAdjacentHTML("beforeend", `<style>a *,button *{cursor:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABNhJREFUWEe9139MlHUcB/D35zk4nrsUQUBBREnTDs4ipS3dtEY2NBFLClKJpasUf4cmLQ1DbRVuVtPcauli+dgCNLRDSQ25/MlUNIf5aw42fih4yCGKjxx3z6c9uN2hu4MLkfvz++Pzed33u+/3830IHn7Fs3guMdYwMIwI/zgUrErIpyOexve0ndxN/DOZ0xTCL9flK6i6exbPBUzmAdpBbXYbxicW0vmeJnM3zy1g/zt8oa71ijHn4gw4uB0BvqG89vkS0pIuN6GA5j1xgCmZ5WM3d4r51VnOXJlRRRiqjzIn7hLinjhg79ssH7NI4q7qtc5cK6NMGKo3mt/cRU8esPstlk9YJPH3GhdghcGEcL3RnLS7DwAFSSyftEhiYa0LsPxZE8J1RnNyYR8A8mayXGaRxD11LsCy0Q8AKXv6ALDzDZZP3ZLEPzoBFo8yYYjOaJ6ztw8AOxJZPtUkiUXXXSuw8BkTwkSjOc3UB4Dc6SyfbpLE/TdcgPkjTQgVjeZ5RX0A2D6N5XKrJBbXuwAfPN0BYAYqWcE2xYJNC8qp/XHvBOdNmJ/M2roWBGUcQP1Pr+OeCjjQ4ALEhWRCQ34I143DEF0MGChmBZ8So+3GQVzNBik9wXQAtsZzhkBYx0B/AFUEDDvXLGkO3XQBOgefMHAJJgavcDUR6ljBJ4sP0s7/i6Ct8ZyqMKQa+RRX3ztKY/xTMMA3AudvSyixuAeoSV4NXs8W27/kS3oY/ZMxyM/AzFjdDuxrseNStpns3mDou8l8xtpeFSvVTIECO0K00UgdWsTnWyQqbfQM6Bxc3ZqksF95iDj2wZYSLKxgQ8Zh2tIdgjbFsVzRIol/N7mSpYYfRK1chs5t3QUK8jUgVIwBQQNDvySE+o0DM7742EyuiuYmCG18heULd3aIR62fO7snBq6FAB8csXq3Ao/GJQiID/4eI/RTHRoHolceo6ue/gB9NYkv194/Pnp/Y5rzRAzWxmKEPoFPNq93+17objXUfn/NcMwKK4V6UlYfp689AjZM4Fw7Wt+T6mOhwOYcJwpBuK/c8iaXxzFzBp+GKAT9lnWCZnsEZI/nFBDySq0LUN126LESPjp5RtA+BPpElWSX0WueAZEsKiG4UddeGnD49vu9Cwg8BH/NyOINp2maR4Da8dmL/I0CJWOfdSpalGu9glBPQ8rACggQt31ZTh92CVgTw+GKBtdqbAfE460LewUQrInF5P4FYEJ6zln6sUuA2rkqhnMAZB5tnYsGx+M//8eK6zFS+66DBAzbeI6udwtYFML9dINQIaM+suTedNjQ1OOV0FEY4vUl0EDcs+kCzewq0EPnPCOaJzHjcKNS5nPSNvehY+m9hvCS7zaEauLaiRH77WWq8BqgDlxu4CXM2NKg/IUz9qVQ0OZ9bgAGIROjfNLVerBu82XK7m6y25tu2SjOUhjrmnGOyh1LcR8et9AZX4AW0UIWhlMqCMgPuobZ3rwRPF61iyN5PgRstuOuXxX/jFrkQXYDEeCLwZiC0fQRnsIINfn24EqkZ8PLctzVEqVH8BhBg80MdHwNtaISd3AJNlg7aq4eEQigsfBh9R2Daias+qGK8rtb9s79XhWbRZH8AhhJCvAyMwxEGAhAfYDUEXCGGYVN/bG74CK5iomXiv8AJX/fMDNo+wAAAAAASUVORK5CYII=") 8 1,pointer!important}*,body{cursor:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABNFJREFUWEe91XtQVHUUB/DvuXvvsq7Csq5AgKn4zHRIJ7XR7OE4iJMIrg/MqbTGJgUfTY2WOmPiIxsdtUwD09q44VgOSpoYSSWiQIiS4ZNMR51UENAFZdnZvbt7mispYTncRfH3387vnPP9zO/+7l3KmcTTScBaJlR4GC+P3U5leISLciZz7eWGclOQFIpAqaPd50Vc3A4qelQGyk5kzqu0oaBqG2b3yYA5INzhZUxMyKQfHwWCvp/EfOCaDd/9tQJmfQRm9c7gEEOUQsDUsZm0va0RtGsic/41G3ZdXnE7q4NowYxe6Xjc2M/r8yHZmkWb2xJBWROYD1bZsPsfgBpmEAIxvccW9AgcwkxYOH4HrWorBGVamQ9V27DnSuMJ3FkSGfBq1GfoGzQCYKyetIvebwsEfWtlb2GVTci+2hyghgkQkdhlDQaY4yEQtrCIpMRM8j5MCG1LYKWw2ib+UPFfQGMQIT4yBUMsr4GBHXo9XknMJPfDQtDWeFaKamxizn0BjVEjw97F8yGzQUBuMGAdu4caHgaC0uNYKb7+pbiv8sMW5w21TEdM2CL1VIqcQFzyXrK32NRCAX3xEitHbshi7rWlmmZFmyYiLmKlej+Oe7wYPWMfVWhqvE8RfT6alVK7LP5UpQ2gzundYRQSItdDh4Dzbh9i5uTShdYiKDWWld/ssvhLtXaAGtbVOAzjIzazKBgriBGblEsnW4OgDTGsHKuVxbwa/wBqWHjAU7BG2mAQzNeJMGZ2Lh32F0Efj2SlrE4W86/7D1DDOkq9YA3/GoFSWL3bA+v8A/SzPwhaM4KV4zdl8dCN1gHUsCCxM+LDMhAsdXX5gMnz82i3VgStfoGVE7dkscDeeoAa1l4XjvjQrQiWomrey6cQzYCVz7Fyql4Wi2q1A4J03dDLaMVjAU/DJHZHO50FAkmNmYzyRQXUVzNg+TBWTjtksfimNkC4fihiLenQQWIGyolwmoFKMOrBcIiMjIXFdFEzIGUoK2ccslhySxugu2EchpvWQQCSlxRTmtag+9XR4iGs/OGUxSP1TYAI/YuIChgHoxCKMsd6VHma3i4BelgtB9W9omUl9OwDAxYNYuWsUxZLG5YiSOiJZzqsRCdxkDq3DoDvpveceW9d7O2He2f1MyQj2jgP7MXwj36nwgdB0IKBrJx1yaLdcwqDjMugEwy3wFjqqkaqZME0QUDaIcebuKrsv5ujJxPiTYUQYMxadYwmPBBgfjRXurk2TC8Eq3+1xW4XpnxS3niJ3unM7SQLLlV5DofkN0xpljPA8AF66l/3utzo++kZ+rO1CJrXn8eAsBjAry4nFmw4R65/D5vXn1MYWLLfmYBa34m7W+2pM0YZ80DQbVp7kpJaDWipcU5PDtFJuHTFl93uqHtus/LB+g2IEMY4G+rQZfNVqmlp1v/tk5amuX04jeGduV8ZgQa+fLfFTAN5uLSTfIxZG89SqpZZ99ZoAsx6gnuTB2cu8lfCKd/ypssIM2J0pervlI3nSNuH5B6BJoDak9ydd/rgHF/C02DHUfXZ40lajK6YCi9h5Kbz1PSa+HEUmgEzu3E3YhSAONJBFyCxCXpY1DcnPfUiveFHZrNSzQC1660I7qST8DYzBoNQT0BW2iV8A1DTV8pPyd9eCccwipqHYQAAAABJRU5ErkJggg==") 8 1,pointer!important}</style>`)
+    }
+});
+
 fetch(API_URL + "/users/fetch?user=" + uid).then((res) => {
     res.json().then((data) => {
         if (data["banned"] == true) {
-            userBanned = true;
             const banContainer = document.createElement("div");
             banContainer.classList.add("setup");
             banContainer.classList.add("ban-container");
-            banContainer.innerHTML = "<div><img src='https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png' width='80px' height='80px'><h1>You are banned from MicroBlox</h1><div class='display-block'>Please contact us on our <a href='https://discord.gg/PgwJ8An8Jh' target='_blank'>Discord server</a> to get unban.</div></div>"
+            banContainer.innerHTML = `<div><img src='https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png' width='80px' height='80px'><h1>You are banned from Galaxyblox</h1><div class='display-block'>Please send us <a href='https://docs.google.com/forms/d/e/1FAIpQLScgS5bi-L9jo6Ycd7uEupzIg6xTeq84op27UephMge9dY6KwA/viewform?usp=sf_link' target='_blank'>ban appeal</a>, and join our <a href='https://discord.gg/PgwJ8An8Jh' target='_blank'>Discord server</a> to get unban.<br>Your ban ID: <b>${uid}</b><br>Reason: <b>${data["reason"]}</b></div><img src='https://media.discordapp.net/attachments/1137055496155709480/1137056343048597524/5445590_kopia_3_kopia.jpg?width=1033&height=321' width="520px" height="160px" style="border-radius: 10px; margin: 10px;"></div>`
             document.body.style.overflow = "hidden";
             document.getElementsByTagName("html")[0].insertBefore(banContainer, document.getElementsByTagName("html")[0].firstChild);
+        } else {
+            chrome.storage.local.get(["key"]).then((i) => {
+                fetch("https://superking.pythonanywhere.com/key/fetch?key=" + i["key"]).then((res) => {
+                    res.text().then((data) => {
+                        if (i["key"] == undefined || i["key"] == null || data == "404") {
+                    
+                            const setup = document.createElement("div");
+                    
+                            function ShowError(text) {
+                                document.getElementById("error-container").style.display = "block";
+                                document.getElementById("error-text").textContent = text;
+                            }
+                    
+                            function SubmitKey() {
+                    
+                                const key = document.getElementById("keyInput").value;
+                    
+                                fetch(API_URL + "/key/use?key=" + key).then((json) => {
+                                    json.json().then((res) => {
+                                        if (res["used"] == true) {
+                                            chrome.storage.local.set({ "key": key }).then(() => {
+                                                document.querySelector(".setup").classList.add("fadeOut");
+                                                setTimeout(() => {
+                                                    setup.remove();
+                                                    document.body.style.overflow = "auto";
+                                                }, 200);
+                                            });
+                                        } else if (res == "606") {
+                                            ShowError("The key has been already used.")
+                                        } else if (res == "404") {
+                                            ShowError("The key does not exist.")
+                                        }
+                                    })
+                                });
+                            }
+                            setup.className = "setup";
+                            setup.innerHTML = `<div><p class="ver">Version: 1.2.1</p><div class="notice">You can get your key on our <a href="https://discord.gg/2eJKfaAPmK" target="_blank">Discord Server</a></div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="68px" height="68px"/><h1>Let's configure your <g><strong>Roblox Experience</strong></g></h1><input id="keyInput" placeholder="Enter your key" type="password"><div class="buttonContainer"></div><div class="notice dark" id="error-container" style="display: none;"><p id="error-text"></p></div><div class="notice dark"><h3>Additional info</h3><p>・Galaxyblox only supports dark theme. It will be changed automatically.<br>・You can donate us, <a href="https://www.buymeacoffee.com/microplay" target="_blank">by buying us a coffee</a>.</p></div><p class="copyright">Copyright ©️ Microplay Interactive Enterianment Studios 2023. All rights reserved.</p></div>`
+                    
+                            const button = document.createElement("button");
+                            button.textContent = `Link account (${username})`
+                            button.onclick = SubmitKey;
+                    
+                            document.getElementsByTagName("html")[0].insertBefore(setup, document.getElementsByTagName("html")[0].firstChild);
+                            document.querySelector(".buttonContainer").appendChild(button);
+                    
+                            document.body.style.overflow = "hidden";
+                    
+                        } else {
+                            const loading = document.createElement("div");
+                            loading.className = "mb-loading";
+                            loading.innerHTML = "<img src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTExLjY3NiAwTDAgNDQuMTY2IDQzLjU3NyA1NmwxMS42NzYtNDQuMTY2TDExLjY3NiAwem0yMC40MDkgMzUuODI3bC0xMi4xNzctMy4zMDggMy4yNjQtMTIuMzQyIDEyLjE4MiAzLjMwOC0zLjI3IDEyLjM0MnoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=' width='100px' height='100px'/>";
+                            document.getElementsByTagName("html")[0].insertBefore(loading, document.getElementsByTagName("html")[0].firstChild);
+                            document.body.style.overflow = "hidden";
+                    
+                            setTimeout(() => {
+                                loading.classList.add("fadeOut");
+                                setTimeout(() => {
+                                    loading.remove();
+                                    document.body.style.overflow = "auto";
+                                }, 200);
+                            }, 2000);
+                        }
+                    });
+                });
+            });
         }
     });
 })
-
-if (!userBanned) {
-    chrome.storage.local.get(["key"]).then((i) => {
-    
-        fetch("https://superking.pythonanywhere.com/key/fetch?key=" + i["key"]).then((res) => {
-            res.text().then((data) => {
-                if (i["key"] == undefined || i["key"] == null || data == "404") {
-            
-                    const setup = document.createElement("div");
-            
-                    function ShowError(text) {
-                        document.getElementById("error-container").style.display = "block";
-                        document.getElementById("error-text").textContent = text;
-                    }
-            
-                    function SubmitKey() {
-            
-                        const key = document.getElementById("keyInput").value;
-            
-                        fetch(API_URL + "/key/use?key=" + key).then((json) => {
-                            json.json().then((res) => {
-                                console.log(res)
-                                if (res["used"] == true) {
-                                    chrome.storage.local.set({ "key": key }).then(() => {
-                                        document.querySelector(".setup").classList.add("fadeOut");
-                                        setTimeout(() => {
-                                            setup.remove();
-                                            document.body.style.overflow = "auto";
-                                        }, 200);
-                                    });
-                                } else if (res == "606") {
-                                    ShowError("The key has been already used.")
-                                } else if (res == "404") {
-                                    ShowError("The key does not exist.")
-                                }
-                            })
-                        });
-                    }
-                    setup.className = "setup";
-                    setup.innerHTML = `<div><p class="ver">Version: 1.2.1</p><div class="notice">You can get your key on our <a href="https://discord.gg/2eJKfaAPmK" target="_blank">Discord Server</a></div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="68px" height="68px"/><h1>Let's configure your <g><strong>Roblox Experience</strong></g></h1><input id="keyInput" placeholder="Enter your key" type="password"><div class="buttonContainer"></div><div class="notice dark" id="error-container" style="display: none;"><p id="error-text"></p></div><div class="notice dark"><h3>Additional info</h3><p>・MicroBlox only supports dark theme. It will be changed automatically.<br>・You can donate us, <a href="https://www.buymeacoffee.com/microplay" target="_blank">by buying us a coffee</a>.</p></div><p class="copyright">Copyright ©️ Microplay Interactive Enterianment Studios 2023. All rights reserved.</p></div>`
-            
-                    const button = document.createElement("button");
-                    button.textContent = `Link account (${username})`
-                    button.onclick = SubmitKey;
-            
-                    document.getElementsByTagName("html")[0].insertBefore(setup, document.getElementsByTagName("html")[0].firstChild);
-                    document.querySelector(".buttonContainer").appendChild(button);
-            
-                    document.body.style.overflow = "hidden";
-            
-                } else {
-                    const loading = document.createElement("div");
-                    loading.className = "mb-loading";
-                    loading.innerHTML = "<img src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTExLjY3NiAwTDAgNDQuMTY2IDQzLjU3NyA1NmwxMS42NzYtNDQuMTY2TDExLjY3NiAwem0yMC40MDkgMzUuODI3bC0xMi4xNzctMy4zMDggMy4yNjQtMTIuMzQyIDEyLjE4MiAzLjMwOC0zLjI3IDEyLjM0MnoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=' width='100px' height='100px'/>";
-                    document.getElementsByTagName("html")[0].insertBefore(loading, document.getElementsByTagName("html")[0].firstChild);
-                    document.body.style.overflow = "hidden";
-            
-                    setTimeout(() => {
-                        loading.classList.add("fadeOut");
-                        setTimeout(() => {
-                            loading.remove();
-                            document.body.style.overflow = "auto";
-                        }, 200);
-                    }, 2000);
-                }
-            });
-        });
-    
-    });
-}
 
 setTimeout(() => {
 
@@ -181,42 +181,141 @@ setTimeout(() => {
           }
     });
     
+    if (window.location.pathname.startsWith("/galaxyblox")) {
+        document.querySelector(".content").innerHTML = "<div class='gb-content'><img src='https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png' width='70px' height='70px'><h1>Galaxyblox settings</h1></div>";
+    }
+
+    const UserBanners = [
+        "https://cdn.discordapp.com/attachments/1126219611365458010/1138069282840907907/5445590_kopia_3_kopia.png",
+        "https://cdn.discordapp.com/attachments/1126219611365458010/1138084566582710343/pngtree-purple-beautiful-romantic-cool-fresh-banner-background-image_156587.png",
+        "https://cdn.discordapp.com/attachments/1126219611365458010/1138084950348935198/abstract-purple-hexagonal-background-illustration-free-vector.png"
+    ]
+
+    if (window.location.pathname.startsWith("/users/")) {
+        const userID = window.location.pathname.split("/")[2]
+        fetch(API_URL + "/users/fetch?user=" + userID).then((res) => {
+            res.text().then((data) => {
+
+                const banner = document.createElement("div");
+        
+                banner.className = "mb-banner"
+                banner.innerHTML = `<img src='${JSON.parse(data)["banner"]}'>`
+        
+                document.querySelector("#container-main > div.content > div.profile-container.ng-scope > div").insertBefore(banner, document.querySelector("#container-main > div.content > div.profile-container.ng-scope > div").firstChild);
+        
+                function AddBannerButton() {
+                    const EditBannerButton = document.createElement("div");
+                    EditBannerButton.innerHTML = '<svg focusable="false" width="20px" height="20px" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.46v3.04c0 .28.22.5.5.5h3.04c.13 0 .26-.05.35-.15L17.81 9.94l-3.75-3.75L3.15 17.1c-.1.1-.15.22-.15.36zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>';
+            
+                    EditBannerButton.addEventListener("click", () => {
+            
+                        var SelectedBanner = 0; //UserBanners.indexOf(JSON.parse(data)["banner"]);
+                        const BannerPopup = document.createElement("div");
+            
+                        function NextBanner() {
+                            if (SelectedBanner < UserBanners.length - 1) {
+                                SelectedBanner++;
+                                document.querySelector(".mb-b").innerHTML = `<img src='${UserBanners[SelectedBanner]}'>`
+                            }
+                        }
+                        function PrevBanner() {
+                            if (SelectedBanner > 0) {
+                                SelectedBanner--;
+                                document.querySelector(".mb-b").innerHTML = `<img src='${UserBanners[SelectedBanner]}'>`
+                            }
+                        }
+            
+                        BannerPopup.innerHTML = `<div><h1>Change your <g>profile banner</g></h1><div class="mb-banner prev"><div class="prev"><svg focusable="false" fill="currentColor" width="40px" height="40px" aria-hidden="true" viewBox="0 0 24 24"><path d="M12.29 8.71 9.7 11.3c-.39.39-.39 1.02 0 1.41l2.59 2.59c.63.63 1.71.18 1.71-.71V9.41c0-.89-1.08-1.33-1.71-.7z"></path></svg></div><div class="mb-b"></div><div class="next"><svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="40px" height="40px"><path d="m11.71 15.29 2.59-2.59c.39-.39.39-1.02 0-1.41L11.71 8.7c-.63-.62-1.71-.18-1.71.71v5.17c0 .9 1.08 1.34 1.71.71z"></path></svg></div></div><div class="section profile-header "> <div class="section-content profile-header-content ng-scope" <div=""> <div class="avatar avatar-headshot-lg card-plain profile-avatar-image"><span class="avatar-card-link avatar-image-link"> <thumbnail-2d class="avatar-card-image profile-avatar-thumb ng-scope ng-isolate-scope mb-avatar"><span class="thumbnail-2d-container"> <img class="ng-scope ng-isolate-scope" src="https://cdn.discordapp.com/attachments/1126219611365458010/1138083482455781426/Png.png"></span></thumbnail-2d> </span> </div><div class="header-caption"> <div class="header-names"> <div class="header-title"> <h1 class="profile-name text-overflow"> Nickname </h1> <h1 class="profile-name text-overflow font-header-1"> Nickname </h1> </div><div class="profile-display-name font-caption-body text text-overflow"> @Username </div></div></div></div></div><button class="primary" id="SetBannerButton">Set banner</button></div>`
+                        
+                        BannerPopup.className = "setup";
+                        document.body.style.overflow = "hidden";
+                        document.getElementsByTagName("html")[0].insertBefore(BannerPopup, document.getElementsByTagName("html")[0].firstChild);
+    
+                        document.querySelector(".mb-b").innerHTML = `<img src='${UserBanners[SelectedBanner]}'>`
+            
+                        document.getElementById("SetBannerButton").addEventListener("click", () => {
+                            document.querySelector(".setup").classList.add("fadeOut");
+                            setTimeout(() => {
+                                document.querySelector(".setup").remove();
+                                document.body.style.overflow = "auto";
+
+                                fetch(API_URL + "/users/fetch?user=" + uid).then((res) => {
+                                    res.text().then((data) => {
+                                        banner.innerHTML = `<img src='${JSON.parse(data)["banner"]}'>`
+                                        AddBannerButton();
+                                    });
+                                });
+                                
+                            }, 200);
+                            
+                            fetch(API_URL + "/users/setbanner?user=" + uid + "&banner=" + SelectedBanner);
+                        });
+            
+                        document.querySelector(".mb-banner div.prev").addEventListener("click", () => {
+                            PrevBanner();
+                        });
+                        document.querySelector(".mb-banner div.next").addEventListener("click", () => {
+                            NextBanner();
+                        });
+                    });
+                    banner.append(EditBannerButton);
+                }
+                if (uid == userID) {AddBannerButton();}
+            });
+        })
+    }
+
     if (window.location.pathname.startsWith("/users/4186880529") || window.location.pathname.startsWith("/users/651306060")) {
         const div = document.createElement("div");
-        div.innerHTML = `<div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="40px" height="40px">CEO of MicroBlox</div>`;
+        document.querySelector(".ng-scope.ng-isolate-scope").classList.add("mb-avatar");
+        div.innerHTML = `<div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="40px" height="40px">CEO of Galaxyblox</div>`;
         div.classList = "mb-popup"
 
         document.querySelector(".profile-header-top").appendChild(div);
     } else if (window.location.pathname.startsWith("/users/")) {
-        const userID = window.location.pathname.split("/")[2]
-        const div = document.createElement("div");
-        div.innerHTML = `<div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="40px" height="40px">Admin menu </div>`;
-        const button = document.createElement("button");
 
-        fetch(API_URL + "/users/fetch?user=" + userID).then((res) => {
-            res.text().then((data) => {
-                if (data == "404" || JSON.parse(data)["banned"] == false) {
-                    button.textContent = "Ban from MicroBlox"
-                    button.style.marginLeft = "10px";
-                    button.addEventListener("click", () => {
-                        const reason = prompt("Type reason.")
-                        fetch(API_URL + `/users/ban?user=${userID}&reason=${reason == null ? "Not specified" : reason}`);
-                        window.location.reload();
+        if (CEO) {
+            const userID = window.location.pathname.split("/")[2]
+            const div = document.createElement("div");
+            document.querySelector(".ng-scope.ng-isolate-scope").classList.add("mb-avatar");
+            div.innerHTML = `<div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="40px" height="40px">Admin menu </div>`;
+            const button = document.createElement("button");
+            
+            function CheckBanOption() {
+                fetch(API_URL + "/users/fetch?user=" + userID).then((res) => {
+                    res.text().then((data) => {
+                        if (data == "404" || JSON.parse(data)["banned"] == false) {
+                            button.textContent = "Ban from Galaxyblox"
+                            button.style.marginLeft = "10px";
+                            button.onclick = () => {
+                                const reason = prompt("Type reason.")
+                                if (reason == null) {return;}
+                                fetch(API_URL + `/users/ban?user=${userID}&reason=${reason == '' ? "Not specified" : reason}`);
+                                CheckBanOption();
+                            };
+                        } else if (JSON.parse(data)["banned"] == true) {
+                            button.textContent = "Unban from Galaxyblox"
+                            button.style.marginLeft = "10px";
+                            button.onclick = () => {
+                                fetch(API_URL + "/users/unban?user=" + userID);
+                                CheckBanOption();
+                            };
+                        }
+                        div.append(button);
+                        div.classList = "mb-popup"
+                        document.querySelector(".profile-header-top").appendChild(div);
                     });
-                } else if (JSON.parse(data)["banned"] == true) {
-                    button.textContent = "Unban from MicroBlox"
-                    button.style.marginLeft = "10px";
-                    button.addEventListener("click", () => {
-                        fetch(API_URL + "/users/unban?user=" + userID);
-                        window.location.reload();
-                    });
-                }
-                div.append(button);
-                div.classList = "mb-popup"
-                document.querySelector(".profile-header-top").appendChild(div);
-            });
-        });
+                });
+            }
+            CheckBanOption();
+        }
     }
+
+    const robuxCurrency = document.createElement("span");
+    robuxCurrency.className = "rbx-currency"
+    robuxCurrency.textContent = `(${0.05 * Number.parseInt(document.getElementById("nav-robux-amount").textContent)} zł)`
+    document.getElementById("nav-robux-icon").appendChild(robuxCurrency)
+
 }, 1000);
 
 setTimeout(() => {

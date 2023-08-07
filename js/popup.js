@@ -8,6 +8,22 @@ const CensourKey = () => {
     return censouredKey;
 };
 
+chrome.storage.local.get(["cursor"]).then((i) => {
+    console.log(i)
+    if (i["cursor"] == undefined || i["cursor"] == null || i["cursor"] == true) {
+        document.getElementById("customCursorCheckbox").checked = true;
+    } else {
+        document.getElementById("customCursorCheckbox").checked = false;
+    }
+});
+
+document.getElementById("customCursorCheckbox").addEventListener("change", () => {
+    chrome.storage.local.set({"cursor": document.getElementById("customCursorCheckbox").checked});
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.update(tabs[0].id, {url: tabs[0].url});
+    });
+});
+
 document.getElementById("showTokenButton").addEventListener("click", function() {
     if (document.getElementById("token").textContent.startsWith("●")) {
         // Klucz jest niewidzialny
@@ -22,7 +38,7 @@ document.getElementById("showTokenButton").addEventListener("click", function() 
 document.getElementById("MicroplayDiscordLink").addEventListener('click', () => {
     chrome.tabs.create({url: "https://discord.gg/yQhsNkqnDP"})
 });
-document.getElementById("MicrobloxDiscordLink").addEventListener('click', () => {
+document.getElementById("GalaxybloxDiscordLink").addEventListener('click', () => {
     chrome.tabs.create({url: "https://discord.gg/thujbtSHC7"})
 });
 document.getElementById("MicroplayTwitter").addEventListener('click', () => {
