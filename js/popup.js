@@ -9,7 +9,6 @@ const CensourKey = () => {
 };
 
 chrome.storage.local.get(["cursor"]).then((i) => {
-    console.log(i)
     if (i["cursor"] == undefined || i["cursor"] == null || i["cursor"] == true) {
         document.getElementById("customCursorCheckbox").checked = true;
     } else {

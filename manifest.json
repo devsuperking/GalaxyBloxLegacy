@@ -6,7 +6,7 @@
     "content_scripts": [
         {
             "css": ["css/global.css", "css/font.css"],
-            "js": ["js/script.js"],
+            "js": ["js/script.js", "js/features.js"],
             "matches": [
                 "*://www.roblox.com/*",
                 "*://web.roblox.com/*"

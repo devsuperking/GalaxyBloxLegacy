@@ -1,43 +1,42 @@
+// Environment variables
 const API_URL = "https://superking.pythonanywhere.com"
 const username = document.querySelector('.text-overflow.age-bracket-label-username.font-caption-header').textContent;
 const CEO = username == "@DevSuperKing" || username == "@KERTONCZOKO";
 const uid = document.querySelector("#right-navigation-header > div.navbar-right.rbx-navbar-right > ul > div > a").href.split('/')[4];
 
+// Force dark theme
 if (document.body.classList.contains("light-theme")) {
-
-    // const div = document.createElement("div");
-    // document.body.style.overflow = "hidden";
-    // div.className = "setup";
-    // div.innerHTML = "<div><h1>Warning! You are using light theme</h1><p>Consider changing your theme to dark.</p><button>OK</button></div>"
-
-    // document.getElementsByTagName("html")[0].insertBefore(div, document.getElementsByTagName("html")[0].firstChild);
-
     document.body.classList.remove("light-theme")
     document.body.classList.add("dark-theme")
     document.getElementById("navigation-container").classList.remove("light-theme")
     document.getElementById("navigation-container").classList.add("dark-theme")
 }
 
-chrome.storage.local.get(["cursor"]).then((i) => {
-    console.log(i)
-    if (i["cursor"] == true || i["cursor"] == undefined || i["cursor"] == null) {
-        document.head.insertAdjacentHTML("beforeend", `<style>a *,button *{cursor:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABNhJREFUWEe9139MlHUcB/D35zk4nrsUQUBBREnTDs4ipS3dtEY2NBFLClKJpasUf4cmLQ1DbRVuVtPcauli+dgCNLRDSQ25/MlUNIf5aw42fih4yCGKjxx3z6c9uN2hu4MLkfvz++Pzed33u+/3830IHn7Fs3guMdYwMIwI/zgUrErIpyOexve0ndxN/DOZ0xTCL9flK6i6exbPBUzmAdpBbXYbxicW0vmeJnM3zy1g/zt8oa71ijHn4gw4uB0BvqG89vkS0pIuN6GA5j1xgCmZ5WM3d4r51VnOXJlRRRiqjzIn7hLinjhg79ssH7NI4q7qtc5cK6NMGKo3mt/cRU8esPstlk9YJPH3GhdghcGEcL3RnLS7DwAFSSyftEhiYa0LsPxZE8J1RnNyYR8A8mayXGaRxD11LsCy0Q8AKXv6ALDzDZZP3ZLEPzoBFo8yYYjOaJ6ztw8AOxJZPtUkiUXXXSuw8BkTwkSjOc3UB4Dc6SyfbpLE/TdcgPkjTQgVjeZ5RX0A2D6N5XKrJBbXuwAfPN0BYAYqWcE2xYJNC8qp/XHvBOdNmJ/M2roWBGUcQP1Pr+OeCjjQ4ALEhWRCQ34I143DEF0MGChmBZ8So+3GQVzNBik9wXQAtsZzhkBYx0B/AFUEDDvXLGkO3XQBOgefMHAJJgavcDUR6ljBJ4sP0s7/i6Ct8ZyqMKQa+RRX3ztKY/xTMMA3AudvSyixuAeoSV4NXs8W27/kS3oY/ZMxyM/AzFjdDuxrseNStpns3mDou8l8xtpeFSvVTIECO0K00UgdWsTnWyQqbfQM6Bxc3ZqksF95iDj2wZYSLKxgQ8Zh2tIdgjbFsVzRIol/N7mSpYYfRK1chs5t3QUK8jUgVIwBQQNDvySE+o0DM7742EyuiuYmCG18heULd3aIR62fO7snBq6FAB8csXq3Ao/GJQiID/4eI/RTHRoHolceo6ue/gB9NYkv194/Pnp/Y5rzRAzWxmKEPoFPNq93+17objXUfn/NcMwKK4V6UlYfp689AjZM4Fw7Wt+T6mOhwOYcJwpBuK/c8iaXxzFzBp+GKAT9lnWCZnsEZI/nFBDySq0LUN126LESPjp5RtA+BPpElWSX0WueAZEsKiG4UddeGnD49vu9Cwg8BH/NyOINp2maR4Da8dmL/I0CJWOfdSpalGu9glBPQ8rACggQt31ZTh92CVgTw+GKBtdqbAfE460LewUQrInF5P4FYEJ6zln6sUuA2rkqhnMAZB5tnYsGx+M//8eK6zFS+66DBAzbeI6udwtYFML9dINQIaM+suTedNjQ1OOV0FEY4vUl0EDcs+kCzewq0EPnPCOaJzHjcKNS5nPSNvehY+m9hvCS7zaEauLaiRH77WWq8BqgDlxu4CXM2NKg/IUz9qVQ0OZ9bgAGIROjfNLVerBu82XK7m6y25tu2SjOUhjrmnGOyh1LcR8et9AZX4AW0UIWhlMqCMgPuobZ3rwRPF61iyN5PgRstuOuXxX/jFrkQXYDEeCLwZiC0fQRnsIINfn24EqkZ8PLctzVEqVH8BhBg80MdHwNtaISd3AJNlg7aq4eEQigsfBh9R2Daias+qGK8rtb9s79XhWbRZH8AhhJCvAyMwxEGAhAfYDUEXCGGYVN/bG74CK5iomXiv8AJX/fMDNo+wAAAAAASUVORK5CYII=") 8 1,pointer!important}*,body{cursor:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABNFJREFUWEe91XtQVHUUB/DvuXvvsq7Csq5AgKn4zHRIJ7XR7OE4iJMIrg/MqbTGJgUfTY2WOmPiIxsdtUwD09q44VgOSpoYSSWiQIiS4ZNMR51UENAFZdnZvbt7mispYTncRfH3387vnPP9zO/+7l3KmcTTScBaJlR4GC+P3U5leISLciZz7eWGclOQFIpAqaPd50Vc3A4qelQGyk5kzqu0oaBqG2b3yYA5INzhZUxMyKQfHwWCvp/EfOCaDd/9tQJmfQRm9c7gEEOUQsDUsZm0va0RtGsic/41G3ZdXnE7q4NowYxe6Xjc2M/r8yHZmkWb2xJBWROYD1bZsPsfgBpmEAIxvccW9AgcwkxYOH4HrWorBGVamQ9V27DnSuMJ3FkSGfBq1GfoGzQCYKyetIvebwsEfWtlb2GVTci+2hyghgkQkdhlDQaY4yEQtrCIpMRM8j5MCG1LYKWw2ib+UPFfQGMQIT4yBUMsr4GBHXo9XknMJPfDQtDWeFaKamxizn0BjVEjw97F8yGzQUBuMGAdu4caHgaC0uNYKb7+pbiv8sMW5w21TEdM2CL1VIqcQFzyXrK32NRCAX3xEitHbshi7rWlmmZFmyYiLmKlej+Oe7wYPWMfVWhqvE8RfT6alVK7LP5UpQ2gzundYRQSItdDh4Dzbh9i5uTShdYiKDWWld/ssvhLtXaAGtbVOAzjIzazKBgriBGblEsnW4OgDTGsHKuVxbwa/wBqWHjAU7BG2mAQzNeJMGZ2Lh32F0Efj2SlrE4W86/7D1DDOkq9YA3/GoFSWL3bA+v8A/SzPwhaM4KV4zdl8dCN1gHUsCCxM+LDMhAsdXX5gMnz82i3VgStfoGVE7dkscDeeoAa1l4XjvjQrQiWomrey6cQzYCVz7Fyql4Wi2q1A4J03dDLaMVjAU/DJHZHO50FAkmNmYzyRQXUVzNg+TBWTjtksfimNkC4fihiLenQQWIGyolwmoFKMOrBcIiMjIXFdFEzIGUoK2ccslhySxugu2EchpvWQQCSlxRTmtag+9XR4iGs/OGUxSP1TYAI/YuIChgHoxCKMsd6VHma3i4BelgtB9W9omUl9OwDAxYNYuWsUxZLG5YiSOiJZzqsRCdxkDq3DoDvpveceW9d7O2He2f1MyQj2jgP7MXwj36nwgdB0IKBrJx1yaLdcwqDjMugEwy3wFjqqkaqZME0QUDaIcebuKrsv5ujJxPiTYUQYMxadYwmPBBgfjRXurk2TC8Eq3+1xW4XpnxS3niJ3unM7SQLLlV5DofkN0xpljPA8AF66l/3utzo++kZ+rO1CJrXn8eAsBjAry4nFmw4R65/D5vXn1MYWLLfmYBa34m7W+2pM0YZ80DQbVp7kpJaDWipcU5PDtFJuHTFl93uqHtus/LB+g2IEMY4G+rQZfNVqmlp1v/tk5amuX04jeGduV8ZgQa+fLfFTAN5uLSTfIxZG89SqpZZ99ZoAsx6gnuTB2cu8lfCKd/ypssIM2J0pervlI3nSNuH5B6BJoDak9ydd/rgHF/C02DHUfXZ40lajK6YCi9h5Kbz1PSa+HEUmgEzu3E3YhSAONJBFyCxCXpY1DcnPfUiveFHZrNSzQC1660I7qST8DYzBoNQT0BW2iV8A1DTV8pPyd9eCccwipqHYQAAAABJRU5ErkJggg==") 8 1,pointer!important}</style>`)
-    }
-});
-
+// Fetch user
 fetch(API_URL + "/users/fetch?user=" + uid).then((res) => {
     res.json().then((data) => {
+
+        // Check if user is banned
         if (data["banned"] == true) {
+
+            // Display ban message
             const banContainer = document.createElement("div");
+
             banContainer.classList.add("setup");
             banContainer.classList.add("ban-container");
+
             banContainer.innerHTML = `<div><img src='https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png' width='80px' height='80px'><h1>You are banned from Galaxyblox</h1><div class='display-block'>Please send us <a href='https://docs.google.com/forms/d/e/1FAIpQLScgS5bi-L9jo6Ycd7uEupzIg6xTeq84op27UephMge9dY6KwA/viewform?usp=sf_link' target='_blank'>ban appeal</a>, and join our <a href='https://discord.gg/PgwJ8An8Jh' target='_blank'>Discord server</a> to get unban.<br>Your ban ID: <b>${uid}</b><br>Reason: <b>${data["reason"]}</b></div><img src='https://media.discordapp.net/attachments/1137055496155709480/1137056343048597524/5445590_kopia_3_kopia.jpg?width=1033&height=321' width="520px" height="160px" style="border-radius: 10px; margin: 10px;"></div>`
+            
             document.body.style.overflow = "hidden";
+            
             document.getElementsByTagName("html")[0].insertBefore(banContainer, document.getElementsByTagName("html")[0].firstChild);
         } else {
+            // Check if extension is activated
             chrome.storage.local.get(["key"]).then((i) => {
                 fetch("https://superking.pythonanywhere.com/key/fetch?key=" + i["key"]).then((res) => {
-                    res.text().then((data) => {
+                    res.text().then((data) => 
+                    {
+                        // Check key
                         if (i["key"] == undefined || i["key"] == null || data == "404") {
                     
                             const setup = document.createElement("div");
@@ -82,12 +81,14 @@ fetch(API_URL + "/users/fetch?user=" + uid).then((res) => {
                             document.body.style.overflow = "hidden";
                     
                         } else {
+                            // Loading
                             const loading = document.createElement("div");
                             loading.className = "mb-loading";
                             loading.innerHTML = "<img src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTExLjY3NiAwTDAgNDQuMTY2IDQzLjU3NyA1NmwxMS42NzYtNDQuMTY2TDExLjY3NiAwem0yMC40MDkgMzUuODI3bC0xMi4xNzctMy4zMDggMy4yNjQtMTIuMzQyIDEyLjE4MiAzLjMwOC0zLjI3IDEyLjM0MnoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=' width='100px' height='100px'/>";
                             document.getElementsByTagName("html")[0].insertBefore(loading, document.getElementsByTagName("html")[0].firstChild);
                             document.body.style.overflow = "hidden";
-                    
+                            
+                            // Fade out loading
                             setTimeout(() => {
                                 loading.classList.add("fadeOut");
                                 setTimeout(() => {
@@ -103,6 +104,7 @@ fetch(API_URL + "/users/fetch?user=" + uid).then((res) => {
     });
 })
 
+// Update UI.
 setTimeout(() => {
 
     document.querySelector("#nav-home > div").innerHTML = '<svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z"></path></svg>';
@@ -153,6 +155,12 @@ setTimeout(() => {
         document.querySelector(".scroller.prev").remove();
     } catch {}
 
+    const GalaxyBloxTab = document.createElement('li');
+    GalaxyBloxTab.innerHTML = '<a class="dynamic-overflow-container text-nav" href="/galaxyblox" id="nav-home" target="_self"><div><svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="m14.43 10-1.47-4.84c-.29-.95-1.63-.95-1.91 0L9.57 10H5.12c-.97 0-1.37 1.25-.58 1.81l3.64 2.6-1.43 4.61c-.29.93.79 1.68 1.56 1.09l3.69-2.8 3.69 2.81c.77.59 1.85-.16 1.56-1.09l-1.43-4.61 3.64-2.6c.79-.57.39-1.81-.58-1.81h-4.45z"></path></svg></div><span class="font-header-2 dynamic-ellipsis-item">Galaxyblox</span></a>'
+
+    document.querySelector(".left-col-list").insertBefore(GalaxyBloxTab, document.querySelector("#navigation > div > div.simplebar-wrapper > div.simplebar-mask > div > div > div > ul > li:nth-child(2)"));
+
+    // Horizontal scroll
     document.querySelectorAll('.horizontal-scroller.games-list').forEach((scrollContainer) => {
         scrollContainer.addEventListener('wheel',function (event) {
             //only vertical scroll
@@ -182,7 +190,67 @@ setTimeout(() => {
     });
     
     if (window.location.pathname.startsWith("/galaxyblox")) {
-        document.querySelector(".content").innerHTML = "<div class='gb-content'><img src='https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png' width='70px' height='70px'><h1>Galaxyblox settings</h1></div>";
+        document.querySelector(".content").innerHTML = `
+        <div class='gb-content'>
+        <img src='https://media.discordapp.net/attachments/1137055496155709480/1137056343048597524/5445590_kopia_3_kopia.jpg?width=1141&height=355' width="1200px" height="200px" style="object-fit: cover; border-radius: 10px; margin: 10px;">
+        <img src='https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png' width='70px' height='70px'>
+        <h1>Galaxyblox settings</h1>
+        <div class='gb-container'>
+        <h2>Robux currency</h2>
+        <select class='gb-select' id="RobuxCurrencySelect">
+        <option>
+        Disable
+        </option>
+        <option>
+        USD
+        </option>
+        <option>
+        PLN
+        </option>
+        </select>
+        </div>
+        <div class='gb-container'>
+        <h2>Custom cursor</h2>
+        <label class="switch">
+            <input type="checkbox" checked id="CustomCursorCheckbox">
+            <span class="slider round"></span>
+        </label>
+        Enable custom cursor
+        </div>
+        </div>`;
+
+        // Custom cursor checkbox
+        chrome.storage.local.get(["cursor"]).then((i) => {
+            if (i["cursor"] == undefined || i["cursor"] == null || i["cursor"] == true) {
+                document.getElementById("CustomCursorCheckbox").checked = true;
+            } else {
+                document.getElementById("CustomCursorCheckbox").checked = false;
+            }
+        });
+        document.getElementById("CustomCursorCheckbox").addEventListener("change", () => {
+            chrome.storage.local.set({"cursor": document.getElementById("CustomCursorCheckbox").checked}).then(() => {window.location.reload()});
+        });
+        chrome.storage.local.get(["currency"]).then((i) => {
+            if (i["currency"] == undefined || i["currency"] == null || i["currency"] == "Disabled") {
+                document.getElementById("RobuxCurrencySelect").value = "Disabled";
+            } else {
+                document.getElementById("RobuxCurrencySelect").value = i["currency"];
+            }
+        });
+        document.getElementById("RobuxCurrencySelect").addEventListener("change", () => {
+            chrome.storage.local.set({"currency": document.getElementById("RobuxCurrencySelect").value});
+            const RobuxCount = document.querySelector("#nav-robux-amount");
+            const RobuxCurrency = document.querySelector(".rbx-currency");
+            const RobloxCurrencySelect = document.getElementById("RobuxCurrencySelect");
+
+            if (RobloxCurrencySelect.value == "PLN") {
+                RobuxCurrency.innerHTML = `(${0.05 * Number.parseInt(RobuxCount.textContent)} zł)`
+            } else if (RobloxCurrencySelect.value == "USD") {
+                RobuxCurrency.innerHTML = `(${0.01 * Number.parseInt(RobuxCount.textContent)} USD)`
+            } else if (RobloxCurrencySelect.value == "Disable") {
+                document.querySelector(".rbx-currency").textContent = "";
+            }
+        });
     }
 
     const UserBanners = [
@@ -310,11 +378,6 @@ setTimeout(() => {
             CheckBanOption();
         }
     }
-
-    const robuxCurrency = document.createElement("span");
-    robuxCurrency.className = "rbx-currency"
-    robuxCurrency.textContent = `(${0.05 * Number.parseInt(document.getElementById("nav-robux-amount").textContent)} zł)`
-    document.getElementById("nav-robux-icon").appendChild(robuxCurrency)
 
 }, 1000);
 
