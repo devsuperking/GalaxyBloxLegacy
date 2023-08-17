@@ -7,6 +7,8 @@
 }
 
 .dark-theme .content {
+    display: flex;
+    justify-content: center;
     max-width: 1800px;
     min-width: 1200px;
     background-color: #222426;
@@ -122,6 +124,7 @@ li.rbx-upgrade-now {
 
 .rbx-header .rbx-navbar li {
     height: 40px;
+    border-radius: 8px;
     transition: background-color 0.2s;
 }
 
@@ -167,7 +170,6 @@ li.rbx-upgrade-now {
 .rbx-header .rbx-navbar li:hover {
     border-bottom: none !important;
     background-color: #222727;
-    border-radius: 8px;
     transition: background-color 0.2s;
 }
 
@@ -175,12 +177,13 @@ li.rbx-upgrade-now {
     background-color: #191a1c;
     box-sizing: border-box;
     padding: 25px !important;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 #HomeContainer,
-#container-main {
-    width: min-content !important;
+#container-main, .profile-container {
+    width: min-content;
+    min-width: 1000px;
     max-width: 1600px !important;
 }
 
@@ -193,7 +196,7 @@ li.rbx-upgrade-now {
     background-color: #191a1c;
     padding: 10px !important;
     margin-bottom: 15px;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 .rbx-navbar-header {
@@ -221,7 +224,12 @@ li.rbx-upgrade-now {
         display: none !important;
     }
 }
-
+@media (max-width: 991px) {
+    .rbx-left-col {
+        height: 100% !important;
+        top: 60px !important;
+    }
+}
 #navbar-search-input {
     padding-left: 5px !important;
     background-color: #212524 !important;
@@ -269,9 +277,11 @@ li.rbx-upgrade-now {
 .horizontal-scroller.games-list {
     overflow-x: auto;
     overflow-y: hidden;
-    padding: 10px;
-    padding-bottom: 5px !important;
+    padding: 15px !important;
+    padding-bottom: 25px !important;
+    box-sizing: content-box;
     border-radius: 10px;
+    height: min-content;
     background-color: #191919;
 }
 
@@ -326,11 +336,11 @@ div.avatar.avatar-card-fullbody>span>thumbnail-2d>span>img {
     transition: background-color 0.1s;
 }
 
-a[target="_blank"] {
+a[target="_blank"]:not(.gb-link) {
     color: #d1d1d1 !important;
 }
 
-a[target="_blank"]:hover {
+a[target="_blank"]:hover:not(.gb-link) {
     color: #fff !important;
 }
 
@@ -375,7 +385,6 @@ a[target="_blank"]:hover {
     background-color: #2f2f2f !important;
 }
 
-/* CHAT */
 #chat-main,
 .chat-header,
 .chat-windows-header,
@@ -444,21 +453,45 @@ img.ng-scope.ng-isolate-scope:not(.mb) {
     min-height: 30px;
     transition: filter 0.3s !important;
 }
-
-/* a *, button * {
-    cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABNhJREFUWEe9139MlHUcB/D35zk4nrsUQUBBREnTDs4ipS3dtEY2NBFLClKJpasUf4cmLQ1DbRVuVtPcauli+dgCNLRDSQ25/MlUNIf5aw42fih4yCGKjxx3z6c9uN2hu4MLkfvz++Pzed33u+/3830IHn7Fs3guMdYwMIwI/zgUrErIpyOexve0ndxN/DOZ0xTCL9flK6i6exbPBUzmAdpBbXYbxicW0vmeJnM3zy1g/zt8oa71ijHn4gw4uB0BvqG89vkS0pIuN6GA5j1xgCmZ5WM3d4r51VnOXJlRRRiqjzIn7hLinjhg79ssH7NI4q7qtc5cK6NMGKo3mt/cRU8esPstlk9YJPH3GhdghcGEcL3RnLS7DwAFSSyftEhiYa0LsPxZE8J1RnNyYR8A8mayXGaRxD11LsCy0Q8AKXv6ALDzDZZP3ZLEPzoBFo8yYYjOaJ6ztw8AOxJZPtUkiUXXXSuw8BkTwkSjOc3UB4Dc6SyfbpLE/TdcgPkjTQgVjeZ5RX0A2D6N5XKrJBbXuwAfPN0BYAYqWcE2xYJNC8qp/XHvBOdNmJ/M2roWBGUcQP1Pr+OeCjjQ4ALEhWRCQ34I143DEF0MGChmBZ8So+3GQVzNBik9wXQAtsZzhkBYx0B/AFUEDDvXLGkO3XQBOgefMHAJJgavcDUR6ljBJ4sP0s7/i6Ct8ZyqMKQa+RRX3ztKY/xTMMA3AudvSyixuAeoSV4NXs8W27/kS3oY/ZMxyM/AzFjdDuxrseNStpns3mDou8l8xtpeFSvVTIECO0K00UgdWsTnWyQqbfQM6Bxc3ZqksF95iDj2wZYSLKxgQ8Zh2tIdgjbFsVzRIol/N7mSpYYfRK1chs5t3QUK8jUgVIwBQQNDvySE+o0DM7742EyuiuYmCG18heULd3aIR62fO7snBq6FAB8csXq3Ao/GJQiID/4eI/RTHRoHolceo6ue/gB9NYkv194/Pnp/Y5rzRAzWxmKEPoFPNq93+17objXUfn/NcMwKK4V6UlYfp689AjZM4Fw7Wt+T6mOhwOYcJwpBuK/c8iaXxzFzBp+GKAT9lnWCZnsEZI/nFBDySq0LUN126LESPjp5RtA+BPpElWSX0WueAZEsKiG4UddeGnD49vu9Cwg8BH/NyOINp2maR4Da8dmL/I0CJWOfdSpalGu9glBPQ8rACggQt31ZTh92CVgTw+GKBtdqbAfE460LewUQrInF5P4FYEJ6zln6sUuA2rkqhnMAZB5tnYsGx+M//8eK6zFS+66DBAzbeI6udwtYFML9dINQIaM+suTedNjQ1OOV0FEY4vUl0EDcs+kCzewq0EPnPCOaJzHjcKNS5nPSNvehY+m9hvCS7zaEauLaiRH77WWq8BqgDlxu4CXM2NKg/IUz9qVQ0OZ9bgAGIROjfNLVerBu82XK7m6y25tu2SjOUhjrmnGOyh1LcR8et9AZX4AW0UIWhlMqCMgPuobZ3rwRPF61iyN5PgRstuOuXxX/jFrkQXYDEeCLwZiC0fQRnsIINfn24EqkZ8PLctzVEqVH8BhBg80MdHwNtaISd3AJNlg7aq4eEQigsfBh9R2Daias+qGK8rtb9s79XhWbRZH8AhhJCvAyMwxEGAhAfYDUEXCGGYVN/bG74CK5iomXiv8AJX/fMDNo+wAAAAAASUVORK5CYII=") 8 1, pointer !important;
-}
-*, body {
-    cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABNFJREFUWEe91XtQVHUUB/DvuXvvsq7Csq5AgKn4zHRIJ7XR7OE4iJMIrg/MqbTGJgUfTY2WOmPiIxsdtUwD09q44VgOSpoYSSWiQIiS4ZNMR51UENAFZdnZvbt7mispYTncRfH3387vnPP9zO/+7l3KmcTTScBaJlR4GC+P3U5leISLciZz7eWGclOQFIpAqaPd50Vc3A4qelQGyk5kzqu0oaBqG2b3yYA5INzhZUxMyKQfHwWCvp/EfOCaDd/9tQJmfQRm9c7gEEOUQsDUsZm0va0RtGsic/41G3ZdXnE7q4NowYxe6Xjc2M/r8yHZmkWb2xJBWROYD1bZsPsfgBpmEAIxvccW9AgcwkxYOH4HrWorBGVamQ9V27DnSuMJ3FkSGfBq1GfoGzQCYKyetIvebwsEfWtlb2GVTci+2hyghgkQkdhlDQaY4yEQtrCIpMRM8j5MCG1LYKWw2ib+UPFfQGMQIT4yBUMsr4GBHXo9XknMJPfDQtDWeFaKamxizn0BjVEjw97F8yGzQUBuMGAdu4caHgaC0uNYKb7+pbiv8sMW5w21TEdM2CL1VIqcQFzyXrK32NRCAX3xEitHbshi7rWlmmZFmyYiLmKlej+Oe7wYPWMfVWhqvE8RfT6alVK7LP5UpQ2gzundYRQSItdDh4Dzbh9i5uTShdYiKDWWld/ssvhLtXaAGtbVOAzjIzazKBgriBGblEsnW4OgDTGsHKuVxbwa/wBqWHjAU7BG2mAQzNeJMGZ2Lh32F0Efj2SlrE4W86/7D1DDOkq9YA3/GoFSWL3bA+v8A/SzPwhaM4KV4zdl8dCN1gHUsCCxM+LDMhAsdXX5gMnz82i3VgStfoGVE7dkscDeeoAa1l4XjvjQrQiWomrey6cQzYCVz7Fyql4Wi2q1A4J03dDLaMVjAU/DJHZHO50FAkmNmYzyRQXUVzNg+TBWTjtksfimNkC4fihiLenQQWIGyolwmoFKMOrBcIiMjIXFdFEzIGUoK2ccslhySxugu2EchpvWQQCSlxRTmtag+9XR4iGs/OGUxSP1TYAI/YuIChgHoxCKMsd6VHma3i4BelgtB9W9omUl9OwDAxYNYuWsUxZLG5YiSOiJZzqsRCdxkDq3DoDvpveceW9d7O2He2f1MyQj2jgP7MXwj36nwgdB0IKBrJx1yaLdcwqDjMugEwy3wFjqqkaqZME0QUDaIcebuKrsv5ujJxPiTYUQYMxadYwmPBBgfjRXurk2TC8Eq3+1xW4XpnxS3niJ3unM7SQLLlV5DofkN0xpljPA8AF66l/3utzo++kZ+rO1CJrXn8eAsBjAry4nFmw4R65/D5vXn1MYWLLfmYBa34m7W+2pM0YZ80DQbVp7kpJaDWipcU5PDtFJuHTFl93uqHtus/LB+g2IEMY4G+rQZfNVqmlp1v/tk5amuX04jeGduV8ZgQa+fLfFTAN5uLSTfIxZG89SqpZZ99ZoAsx6gnuTB2cu8lfCKd/ypssIM2J0pervlI3nSNuH5B6BJoDak9ydd/rgHF/C02DHUfXZ40lajK6YCi9h5Kbz1PSa+HEUmgEzu3E3YhSAONJBFyCxCXpY1DcnPfUiveFHZrNSzQC1660I7qST8DYzBoNQT0BW2iV8A1DTV8pPyd9eCccwipqHYQAAAABJRU5ErkJggg==") 8 1, pointer !important;
-} */
 .btn-common-play-game-lg.min {
     display: flex;
     align-items: center;
+    z-index: 0;
     justify-content: center;
+    width: 30px !important;
     height: 30px !important;
-    min-width: 100% !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
 }
-
+.btn-friends.ng-scope {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+}
+.details-actions.desktop-action {
+    margin-bottom: 10px;
+}
+.btn-common-play-game-lg.min svg {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+}
+.game-card-link:hover span a, .game-card-link:hover a {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: all 0.4s;
+}
+.game-card-link a {
+    width: 30px !important;
+    height: 30px !important;
+    position: absolute;
+    z-index: 100;
+    right: 5px;
+    bottom: 5px;
+    opacity: 0;
+    transform: translateY(-15px);
+    transition: all 0.4s;
+}
 .btn-common-play-game-lg:hover {
     filter: hue-rotate(30deg);
     transition: filter 0.3s !important;
@@ -845,11 +878,14 @@ button.primary:hover {
 }
 
 .content .gb-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
     padding: 10px;
+    width: min-content;
     background-color: #1f1f1f;
     border-radius: 15px;
-    background-image: url(https://static.vecteezy.com/system/resources/thumbnails/007/233/629/small/black-rhombus-pattern-dark-black-sofa-leather-texture-geometric-vintage-simple-ornament-and-fabric-texture-black-rhombus-tile-background-abstract-wallpaper-design-illustration-vector.jpg);
 }
 
 .gb-select {
@@ -863,7 +899,6 @@ button.primary:hover {
 .gb-container {
     padding: 15px;
     border-radius: 10px;
-    /* border-bottom: solid 3px rgb(37, 37, 37); */
     margin: 10px;
 }
 
@@ -875,6 +910,7 @@ button.primary:hover {
 .switch {
     position: relative;
     display: inline-block;
+    margin: 5px;
     width: 50px;
     height: 24px;
 }
@@ -929,4 +965,22 @@ input:checked+.slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+.gb-container-f {
+    padding: 5px;
+    border-radius: 5px;
+    margin: 10px;
+    min-width: 320px;
+    width: min-content;
+}
+.age-bracket-label.text-header, .age-bracket-label.text-header * {
+    padding: 2px;
+    user-select: none;
+    border-radius: 6px;
+    transition: background-color 0.1s;
+}
+.age-bracket-label.text-header:hover, .age-bracket-label.text-header:hover * {
+    background-color: #313235 !important;
+    padding: 2px;
+    transition: background-color 0.1s;
 }

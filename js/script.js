@@ -25,7 +25,7 @@ fetch(API_URL + "/users/fetch?user=" + uid).then((res) => {
             banContainer.classList.add("setup");
             banContainer.classList.add("ban-container");
 
-            banContainer.innerHTML = `<div><img src='https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png' width='80px' height='80px'><h1>You are banned from Galaxyblox</h1><div class='display-block'>Please send us <a href='https://docs.google.com/forms/d/e/1FAIpQLScgS5bi-L9jo6Ycd7uEupzIg6xTeq84op27UephMge9dY6KwA/viewform?usp=sf_link' target='_blank'>ban appeal</a>, and join our <a href='https://discord.gg/PgwJ8An8Jh' target='_blank'>Discord server</a> to get unban.<br>Your ban ID: <b>${uid}</b><br>Reason: <b>${data["reason"]}</b></div><img src='https://media.discordapp.net/attachments/1137055496155709480/1137056343048597524/5445590_kopia_3_kopia.jpg?width=1033&height=321' width="520px" height="160px" style="border-radius: 10px; margin: 10px;"></div>`
+            banContainer.innerHTML = `<div><img src='https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png' width='80px' height='80px'><h1>You are banned from Galaxyblox</h1><div class='display-block'>Please send us <a href='https://docs.google.com/forms/d/e/1FAIpQLScgS5bi-L9jo6Ycd7uEupzIg6xTeq84op27UephMge9dY6KwA/viewform?usp=sf_link' target='_blank'>ban appeal</a>, and join our <a href='https://discord.gg/cJhtjZ83A7' target='_blank'>Discord server</a> to get unban.<br>Your ban ID: <b>${uid}</b><br>Reason: <b>${data["reason"]}</b></div><img src='https://media.discordapp.net/attachments/1137055496155709480/1137056343048597524/5445590_kopia_3_kopia.jpg?width=1033&height=321' width="520px" height="160px" style="border-radius: 10px; margin: 10px;"></div>`
             
             document.body.style.overflow = "hidden";
             
@@ -40,7 +40,7 @@ fetch(API_URL + "/users/fetch?user=" + uid).then((res) => {
                         if (i["key"] == undefined || i["key"] == null || data == "404") {
                     
                             const setup = document.createElement("div");
-                    
+
                             function ShowError(text) {
                                 document.getElementById("error-container").style.display = "block";
                                 document.getElementById("error-text").textContent = text;
@@ -50,7 +50,7 @@ fetch(API_URL + "/users/fetch?user=" + uid).then((res) => {
                     
                                 const key = document.getElementById("keyInput").value;
                     
-                                fetch(API_URL + "/key/use?key=" + key).then((json) => {
+                                fetch(API_URL + "/key/use?key=" + key + "&rbxUser=" + uid + "&rbxName=" + username).then((json) => {
                                     json.json().then((res) => {
                                         if (res["used"] == true) {
                                             chrome.storage.local.set({ "key": key }).then(() => {
@@ -69,7 +69,7 @@ fetch(API_URL + "/users/fetch?user=" + uid).then((res) => {
                                 });
                             }
                             setup.className = "setup";
-                            setup.innerHTML = `<div><p class="ver">Version: 1.2.1</p><div class="notice">You can get your key on our <a href="https://discord.gg/2eJKfaAPmK" target="_blank">Discord Server</a></div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="68px" height="68px"/><h1>Let's configure your <g><strong>Roblox Experience</strong></g></h1><input id="keyInput" placeholder="Enter your key" type="password"><div class="buttonContainer"></div><div class="notice dark" id="error-container" style="display: none;"><p id="error-text"></p></div><div class="notice dark"><h3>Additional info</h3><p>・Galaxyblox only supports dark theme. It will be changed automatically.<br>・You can donate us, <a href="https://www.buymeacoffee.com/microplay" target="_blank">by buying us a coffee</a>.</p></div><p class="copyright">Copyright ©️ Microplay Interactive Enterianment Studios 2023. All rights reserved.</p></div>`
+                            setup.innerHTML = `<div><p class="ver">Version: 1.2</p><div class="notice">You can generate your key <b>FOR FREE</b> on our <a href="https://discord.gg/cJhtjZ83A7" target="_blank" class="gb-link">Discord Server</a></div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="68px" height="68px"/><h1>Let's configure your <g><strong>Roblox Experience</strong></g></h1><input id="keyInput" placeholder="Enter your key" type="password"><div class="buttonContainer"></div><div class="notice dark" id="error-container" style="display: none;"><p id="error-text"></p></div><div class="notice dark"><h3>Additional info</h3><p>・Galaxyblox only supports dark theme. It will be changed automatically.<br>・You can donate us, <a href="https://www.buymeacoffee.com/microplay" target="_blank">by buying us a coffee</a>.</p></div><p class="copyright">Copyright ©️ Microplay Interactive Enterianment Studios 2023. All rights reserved.</p><iframe width="460" height="260" style="margin: 10px;" src="https://www.youtube.com/embed/WOFOSsroSbE?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`
                     
                             const button = document.createElement("button");
                             button.textContent = `Link account (${username})`
@@ -95,7 +95,7 @@ fetch(API_URL + "/users/fetch?user=" + uid).then((res) => {
                                     loading.remove();
                                     document.body.style.overflow = "auto";
                                 }, 200);
-                            }, 2000);
+                            }, 1000);
                         }
                     });
                 });
@@ -188,75 +188,13 @@ setTimeout(() => {
             }
           }
     });
-    
-    if (window.location.pathname.startsWith("/galaxyblox")) {
-        document.querySelector(".content").innerHTML = `
-        <div class='gb-content'>
-        <img src='https://media.discordapp.net/attachments/1137055496155709480/1137056343048597524/5445590_kopia_3_kopia.jpg?width=1141&height=355' width="1200px" height="200px" style="object-fit: cover; border-radius: 10px; margin: 10px;">
-        <img src='https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png' width='70px' height='70px'>
-        <h1>Galaxyblox settings</h1>
-        <div class='gb-container'>
-        <h2>Robux currency</h2>
-        <select class='gb-select' id="RobuxCurrencySelect">
-        <option>
-        Disable
-        </option>
-        <option>
-        USD
-        </option>
-        <option>
-        PLN
-        </option>
-        </select>
-        </div>
-        <div class='gb-container'>
-        <h2>Custom cursor</h2>
-        <label class="switch">
-            <input type="checkbox" checked id="CustomCursorCheckbox">
-            <span class="slider round"></span>
-        </label>
-        Enable custom cursor
-        </div>
-        </div>`;
-
-        // Custom cursor checkbox
-        chrome.storage.local.get(["cursor"]).then((i) => {
-            if (i["cursor"] == undefined || i["cursor"] == null || i["cursor"] == true) {
-                document.getElementById("CustomCursorCheckbox").checked = true;
-            } else {
-                document.getElementById("CustomCursorCheckbox").checked = false;
-            }
-        });
-        document.getElementById("CustomCursorCheckbox").addEventListener("change", () => {
-            chrome.storage.local.set({"cursor": document.getElementById("CustomCursorCheckbox").checked}).then(() => {window.location.reload()});
-        });
-        chrome.storage.local.get(["currency"]).then((i) => {
-            if (i["currency"] == undefined || i["currency"] == null || i["currency"] == "Disabled") {
-                document.getElementById("RobuxCurrencySelect").value = "Disabled";
-            } else {
-                document.getElementById("RobuxCurrencySelect").value = i["currency"];
-            }
-        });
-        document.getElementById("RobuxCurrencySelect").addEventListener("change", () => {
-            chrome.storage.local.set({"currency": document.getElementById("RobuxCurrencySelect").value});
-            const RobuxCount = document.querySelector("#nav-robux-amount");
-            const RobuxCurrency = document.querySelector(".rbx-currency");
-            const RobloxCurrencySelect = document.getElementById("RobuxCurrencySelect");
-
-            if (RobloxCurrencySelect.value == "PLN") {
-                RobuxCurrency.innerHTML = `(${0.05 * Number.parseInt(RobuxCount.textContent)} zł)`
-            } else if (RobloxCurrencySelect.value == "USD") {
-                RobuxCurrency.innerHTML = `(${0.01 * Number.parseInt(RobuxCount.textContent)} USD)`
-            } else if (RobloxCurrencySelect.value == "Disable") {
-                document.querySelector(".rbx-currency").textContent = "";
-            }
-        });
-    }
 
     const UserBanners = [
         "https://cdn.discordapp.com/attachments/1126219611365458010/1138069282840907907/5445590_kopia_3_kopia.png",
         "https://cdn.discordapp.com/attachments/1126219611365458010/1138084566582710343/pngtree-purple-beautiful-romantic-cool-fresh-banner-background-image_156587.png",
-        "https://cdn.discordapp.com/attachments/1126219611365458010/1138084950348935198/abstract-purple-hexagonal-background-illustration-free-vector.png"
+        "https://cdn.discordapp.com/attachments/1126219611365458010/1138084950348935198/abstract-purple-hexagonal-background-illustration-free-vector.png",
+        "https://cdn.discordapp.com/attachments/1138790605586190357/1138828396365881444/yellow-and-black-glowing-angled-shapes-banner-free-vector.png",
+        "https://cdn.discordapp.com/attachments/1138790605586190357/1141500419646967930/vecteezy_abstract-blue-fluid-wave-background_17798503.jpg"
     ]
 
     if (window.location.pathname.startsWith("/users/")) {
@@ -379,13 +317,13 @@ setTimeout(() => {
         }
     }
 
-}, 1000);
+}, 100);
 
 setTimeout(() => {
-    Array.from(document.getElementsByClassName("game-card-link")).forEach((card) => {
+    Array.from(document.querySelectorAll(".game-card-link")).forEach((card) => {
         const s = document.createElement("a");
         s.href = "javascript:;";
-        s.innerHTML = `<button class="btn-common-play-game-lg min" onclick="Roblox.GameLauncher.joinPrivateGame('${new URLSearchParams(card.href).get("placeId")}', '', null);"><svg fill="currentColor" width="20px" height="20px" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PlayArrowRoundedIcon"><path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z"></path></svg></button>`;
-        card.appendChild(s);
+        s.innerHTML = `<button class="btn-common-play-game-lg min" onclick="Roblox.GameLauncher.joinPrivateGame('${new URLSearchParams(card.href).get("placeId")}', '', null);"><svg fill="currentColor" width="50px" height="20px" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PlayArrowRoundedIcon"><path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z"></path></svg></button>`;
+        card.children[0].appendChild(s);
     });
-}, 3000);
+}, 1500);
