@@ -1,15 +1,38 @@
 // Environment variables
-const API_URL = "https://superking.pythonanywhere.com"
+const API_URL = "https://superking.pythonanywhere.com";
 const username = document.querySelector('.text-overflow.age-bracket-label-username.font-caption-header').textContent;
-const CEO = username == "@DevSuperKing" || username == "@KERTONCZOKO";
+const CEO = username == "SuperKing" || username == "EloToJa2";
 const uid = document.querySelector("#right-navigation-header > div.navbar-right.rbx-navbar-right > ul > div > a").href.split('/')[4];
+
+const Marketplace = document.createElement("div");
+
+const marketplaceData = chrome.runtime.getURL("/html/marketplace.html");
+const marketplaceStyle = chrome.runtime.getURL("/css/marketplace.css");
+
+fetch(marketplaceStyle).then((response) => {
+    response.text().then((res) => {
+        const style = document.createElement('style');
+        style.textContent = res;
+        document.head.append(style);
+        fetch(marketplaceData).then((response) => {
+            response.text().then((res) => {
+                Marketplace.innerHTML = res;
+            });
+        });
+    });
+});
+
+document.body.style.overflow = "hidden";
+Marketplace.classList.add("marketplace");
+document.getElementsByTagName("html")[0].insertBefore(Marketplace, document.getElementsByTagName("html")[0].firstChild);
+
 
 // Force dark theme
 if (document.body.classList.contains("light-theme")) {
-    document.body.classList.remove("light-theme")
-    document.body.classList.add("dark-theme")
-    document.getElementById("navigation-container").classList.remove("light-theme")
-    document.getElementById("navigation-container").classList.add("dark-theme")
+    document.body.classList.remove("light-theme");
+    document.body.classList.add("dark-theme");
+    document.getElementById("navigation-container").classList.remove("light-theme");
+    document.getElementById("navigation-container").classList.add("dark-theme");
 }
 
 // Fetch user
@@ -25,81 +48,27 @@ fetch(API_URL + "/users/fetch?user=" + uid).then((res) => {
             banContainer.classList.add("setup");
             banContainer.classList.add("ban-container");
 
-            banContainer.innerHTML = `<div><img src='https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png' width='80px' height='80px'><h1>You are banned from Galaxyblox</h1><div class='display-block'>Please send us <a href='https://docs.google.com/forms/d/e/1FAIpQLScgS5bi-L9jo6Ycd7uEupzIg6xTeq84op27UephMge9dY6KwA/viewform?usp=sf_link' target='_blank'>ban appeal</a>, and join our <a href='https://discord.gg/cJhtjZ83A7' target='_blank'>Discord server</a> to get unban.<br>Your ban ID: <b>${uid}</b><br>Reason: <b>${data["reason"]}</b></div><img src='https://media.discordapp.net/attachments/1137055496155709480/1137056343048597524/5445590_kopia_3_kopia.jpg?width=1033&height=321' width="520px" height="160px" style="border-radius: 10px; margin: 10px;"></div>`
+            banContainer.innerHTML = `<div><img src='https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png' width='80px' height='80px'><h1>You are banned from GalaxyBlox</h1><div class='display-block'>Please send us <a href='https://docs.google.com/forms/d/e/1FAIpQLScgS5bi-L9jo6Ycd7uEupzIg6xTeq84op27UephMge9dY6KwA/viewform?usp=sf_link' target='_blank'>ban appeal</a>, and join our <a href='https://discord.gg/cJhtjZ83A7' target='_blank'>Discord server</a> to get unban.<br>Your ban ID: <b>${uid}</b><br>Reason: <b>${data["reason"]}</b></div><img src='https://media.discordapp.net/attachments/1137055496155709480/1137056343048597524/5445590_kopia_3_kopia.jpg?width=1033&height=321' width="520px" height="160px" style="border-radius: 10px; margin: 10px;"></div>`
             
             document.body.style.overflow = "hidden";
             
             document.getElementsByTagName("html")[0].insertBefore(banContainer, document.getElementsByTagName("html")[0].firstChild);
         } else {
-            // Check if extension is activated
-            chrome.storage.local.get(["key"]).then((i) => {
-                fetch("https://superking.pythonanywhere.com/key/fetch?key=" + i["key"]).then((res) => {
-                    res.text().then((data) => 
-                    {
-                        // Check key
-                        if (i["key"] == undefined || i["key"] == null || data == "404") {
-                    
-                            const setup = document.createElement("div");
-
-                            function ShowError(text) {
-                                document.getElementById("error-container").style.display = "block";
-                                document.getElementById("error-text").textContent = text;
-                            }
-                    
-                            function SubmitKey() {
-                    
-                                const key = document.getElementById("keyInput").value;
-                    
-                                fetch(API_URL + "/key/use?key=" + key + "&rbxUser=" + uid + "&rbxName=" + username).then((json) => {
-                                    json.json().then((res) => {
-                                        if (res["used"] == true) {
-                                            chrome.storage.local.set({ "key": key }).then(() => {
-                                                document.querySelector(".setup").classList.add("fadeOut");
-                                                setTimeout(() => {
-                                                    setup.remove();
-                                                    document.body.style.overflow = "auto";
-                                                }, 200);
-                                            });
-                                        } else if (res == "606") {
-                                            ShowError("The key has been already used.")
-                                        } else if (res == "404") {
-                                            ShowError("The key does not exist.")
-                                        }
-                                    })
-                                });
-                            }
-                            setup.className = "setup";
-                            setup.innerHTML = `<div><p class="ver">Version: 1.2</p><div class="notice">You can generate your key <b>FOR FREE</b> on our <a href="https://discord.gg/cJhtjZ83A7" target="_blank" class="gb-link">Discord Server</a></div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="68px" height="68px"/><h1>Let's configure your <g><strong>Roblox Experience</strong></g></h1><input id="keyInput" placeholder="Enter your key" type="password"><div class="buttonContainer"></div><div class="notice dark" id="error-container" style="display: none;"><p id="error-text"></p></div><div class="notice dark"><h3>Additional info</h3><p>・Galaxyblox only supports dark theme. It will be changed automatically.<br>・You can donate us, <a href="https://www.buymeacoffee.com/microplay" target="_blank">by buying us a coffee</a>.</p></div><p class="copyright">Copyright ©️ Microplay Interactive Enterianment Studios 2023. All rights reserved.</p><iframe width="460" height="260" style="margin: 10px;" src="https://www.youtube.com/embed/WOFOSsroSbE?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`
-                    
-                            const button = document.createElement("button");
-                            button.textContent = `Link account (${username})`
-                            button.onclick = SubmitKey;
-                    
-                            document.getElementsByTagName("html")[0].insertBefore(setup, document.getElementsByTagName("html")[0].firstChild);
-                            document.querySelector(".buttonContainer").appendChild(button);
-                    
-                            document.body.style.overflow = "hidden";
-                    
-                        } else {
-                            // Loading
-                            const loading = document.createElement("div");
-                            loading.className = "mb-loading";
-                            loading.innerHTML = "<img src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTExLjY3NiAwTDAgNDQuMTY2IDQzLjU3NyA1NmwxMS42NzYtNDQuMTY2TDExLjY3NiAwem0yMC40MDkgMzUuODI3bC0xMi4xNzctMy4zMDggMy4yNjQtMTIuMzQyIDEyLjE4MiAzLjMwOC0zLjI3IDEyLjM0MnoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=' width='100px' height='100px'/>";
-                            document.getElementsByTagName("html")[0].insertBefore(loading, document.getElementsByTagName("html")[0].firstChild);
-                            document.body.style.overflow = "hidden";
-                            
-                            // Fade out loading
-                            setTimeout(() => {
-                                loading.classList.add("fadeOut");
-                                setTimeout(() => {
-                                    loading.remove();
-                                    document.body.style.overflow = "auto";
-                                }, 200);
-                            }, 1000);
-                        }
-                    });
-                });
-            });
+            // Loading
+            // const loading = document.createElement("div");
+            // loading.className = "mb-loading";
+            // loading.innerHTML = "<img src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTExLjY3NiAwTDAgNDQuMTY2IDQzLjU3NyA1NmwxMS42NzYtNDQuMTY2TDExLjY3NiAwem0yMC40MDkgMzUuODI3bC0xMi4xNzctMy4zMDggMy4yNjQtMTIuMzQyIDEyLjE4MiAzLjMwOC0zLjI3IDEyLjM0MnoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=' width='100px' height='100px'/>";
+            // document.getElementsByTagName("html")[0].insertBefore(loading, document.getElementsByTagName("html")[0].firstChild);
+            // document.body.style.overflow = "hidden";
+            
+            // // Fade out loading
+            // setTimeout(() => {
+            //     loading.classList.add("fadeOut");
+            //     setTimeout(() => {
+            //         loading.remove();
+            //         document.body.style.overflow = "auto";
+            //     }, 200);
+            // }, 1000);
         }
     });
 })
@@ -132,15 +101,9 @@ setTimeout(() => {
 
     document.querySelector("#navbar-search-input").placeholder = "Type here to search...";
 
-    document.querySelector("#settings-icon").innerHTML = '<svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M19.5 12c0-.23-.01-.45-.03-.68l1.86-1.41c.4-.3.51-.86.26-1.3l-1.87-3.23c-.25-.44-.79-.62-1.25-.42l-2.15.91c-.37-.26-.76-.49-1.17-.68l-.29-2.31c-.06-.5-.49-.88-.99-.88h-3.73c-.51 0-.94.38-1 .88l-.29 2.31c-.41.19-.8.42-1.17.68l-2.15-.91c-.46-.2-1-.02-1.25.42L2.41 8.62c-.25.44-.14.99.26 1.3l1.86 1.41c-.02.22-.03.44-.03.67s.01.45.03.68l-1.86 1.41c-.4.3-.51.86-.26 1.3l1.87 3.23c.25.44.79.62 1.25.42l2.15-.91c.37.26.76.49 1.17.68l.29 2.31c.06.5.49.88.99.88h3.73c.5 0 .93-.38.99-.88l.29-2.31c.41-.19.8-.42 1.17-.68l2.15.91c.46.2 1 .02 1.25-.42l1.87-3.23c.25-.44.14-.99-.26-1.3l-1.86-1.41c.03-.23.04-.45.04-.68zm-7.46 3.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"></path></svg>'
+    document.querySelector("#header > div > ul.nav.rbx-navbar.hidden-xs.hidden-sm.col-md-5.col-lg-4 > li:nth-child(4) > a").innerHTML = '<span class="icon-robux-28x28 roblox-popover-close" id="nav-robux"></span><t>Robux</t>';
 
-    document.querySelector("#header > div > ul.nav.rbx-navbar.hidden-xs.hidden-sm.col-md-5.col-lg-4 > li:nth-child(1) > a").innerHTML = '<svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg><t>Discover</t>'
-
-    document.querySelector("#header > div > ul.nav.rbx-navbar.hidden-xs.hidden-sm.col-md-5.col-lg-4 > li:nth-child(2) > a").innerHTML = '<svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M22 9h-4.79l-4.39-6.57c-.4-.59-1.27-.59-1.66 0L6.77 9H2c-.55 0-1 .45-1 1 0 .09.01.18.04.27l2.54 9.27c.23.84 1 1.46 1.92 1.46h13c.92 0 1.69-.62 1.93-1.46l2.54-9.27L23 10c0-.55-.45-1-1-1zM11.99 4.79 14.8 9H9.18l2.81-4.21zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"></path></svg><t>Marketplace</t>'
-
-    document.querySelector("#header > div > ul.nav.rbx-navbar.hidden-xs.hidden-sm.col-md-5.col-lg-4 > li:nth-child(3) > a").innerHTML = '<svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4 11h-3v3c0 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1 1-1h3V8c0-.55.45-1 1-1s1 .45 1 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1z"></path></svg><t>Create</t>'
-
-    document.querySelector("#header > div > ul.nav.rbx-navbar.hidden-xs.hidden-sm.col-md-5.col-lg-4 > li:nth-child(4) > a").innerHTML = '<span class="icon-robux-28x28 roblox-popover-close" id="nav-robux"></span><t>Robux</t>'
+    document.querySelector(".btn-full-width").remove();
 
     if (document.getElementById("Skyscraper-Abp-Left") != undefined) {
         document.getElementById("Skyscraper-Abp-Left").remove();
@@ -150,13 +113,8 @@ setTimeout(() => {
         document.getElementById("Leaderboard-Abp").remove();
     }
 
-    try {
-        document.querySelector(".scroller.next").remove();
-        document.querySelector(".scroller.prev").remove();
-    } catch {}
-
     const GalaxyBloxTab = document.createElement('li');
-    GalaxyBloxTab.innerHTML = '<a class="dynamic-overflow-container text-nav" href="/galaxyblox" id="nav-home" target="_self"><div><svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="m14.43 10-1.47-4.84c-.29-.95-1.63-.95-1.91 0L9.57 10H5.12c-.97 0-1.37 1.25-.58 1.81l3.64 2.6-1.43 4.61c-.29.93.79 1.68 1.56 1.09l3.69-2.8 3.69 2.81c.77.59 1.85-.16 1.56-1.09l-1.43-4.61 3.64-2.6c.79-.57.39-1.81-.58-1.81h-4.45z"></path></svg></div><span class="font-header-2 dynamic-ellipsis-item">Galaxyblox</span></a>'
+    GalaxyBloxTab.innerHTML = '<a class="dynamic-overflow-container text-nav" href="/galaxyblox" id="nav-home" target="_self"><div><svg fill="currentColor" width="30px" height="30px" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="m14.43 10-1.47-4.84c-.29-.95-1.63-.95-1.91 0L9.57 10H5.12c-.97 0-1.37 1.25-.58 1.81l3.64 2.6-1.43 4.61c-.29.93.79 1.68 1.56 1.09l3.69-2.8 3.69 2.81c.77.59 1.85-.16 1.56-1.09l-1.43-4.61 3.64-2.6c.79-.57.39-1.81-.58-1.81h-4.45z"></path></svg></div><span class="font-header-2 dynamic-ellipsis-item">GalaxyBlox</span></a>'
 
     document.querySelector(".left-col-list").insertBefore(GalaxyBloxTab, document.querySelector("#navigation > div > div.simplebar-wrapper > div.simplebar-mask > div > div > div > ul > li:nth-child(2)"));
 
@@ -166,9 +124,9 @@ setTimeout(() => {
             //only vertical scroll
             event.preventDefault();
             if (event.deltaY > 0) { 
-                smoothScroll(scrollContainer, 100, 100)
+                smoothScroll(scrollContainer, 100, 100);
             } else {
-                smoothScroll(scrollContainer, 100, 100)
+                smoothScroll(scrollContainer, 100, 100);
             }
           });
           function smoothScroll (domElement,pixel,delay) {
@@ -204,7 +162,7 @@ setTimeout(() => {
 
                 const banner = document.createElement("div");
         
-                banner.className = "mb-banner"
+                banner.className = "mb-banner";
                 banner.innerHTML = `<img src='${JSON.parse(data)["banner"]}'>`
         
                 document.querySelector("#container-main > div.content > div.profile-container.ng-scope > div").insertBefore(banner, document.querySelector("#container-main > div.content > div.profile-container.ng-scope > div").firstChild);
@@ -216,26 +174,40 @@ setTimeout(() => {
                     EditBannerButton.addEventListener("click", () => {
             
                         var SelectedBanner = 0; //UserBanners.indexOf(JSON.parse(data)["banner"]);
-                        const BannerPopup = document.createElement("div");
+                        const Marketplace = document.createElement("div");
             
                         function NextBanner() {
                             if (SelectedBanner < UserBanners.length - 1) {
                                 SelectedBanner++;
-                                document.querySelector(".mb-b").innerHTML = `<img src='${UserBanners[SelectedBanner]}'>`
+                                document.querySelector(".mb-b").innerHTML = `<img src='${UserBanners[SelectedBanner]}'>`;
                             }
                         }
                         function PrevBanner() {
                             if (SelectedBanner > 0) {
                                 SelectedBanner--;
-                                document.querySelector(".mb-b").innerHTML = `<img src='${UserBanners[SelectedBanner]}'>`
+                                document.querySelector(".mb-b").innerHTML = `<img src='${UserBanners[SelectedBanner]}'>`;
                             }
                         }
-            
-                        BannerPopup.innerHTML = `<div><h1>Change your <g>profile banner</g></h1><div class="mb-banner prev"><div class="prev"><svg focusable="false" fill="currentColor" width="40px" height="40px" aria-hidden="true" viewBox="0 0 24 24"><path d="M12.29 8.71 9.7 11.3c-.39.39-.39 1.02 0 1.41l2.59 2.59c.63.63 1.71.18 1.71-.71V9.41c0-.89-1.08-1.33-1.71-.7z"></path></svg></div><div class="mb-b"></div><div class="next"><svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" width="40px" height="40px"><path d="m11.71 15.29 2.59-2.59c.39-.39.39-1.02 0-1.41L11.71 8.7c-.63-.62-1.71-.18-1.71.71v5.17c0 .9 1.08 1.34 1.71.71z"></path></svg></div></div><div class="section profile-header "> <div class="section-content profile-header-content ng-scope" <div=""> <div class="avatar avatar-headshot-lg card-plain profile-avatar-image"><span class="avatar-card-link avatar-image-link"> <thumbnail-2d class="avatar-card-image profile-avatar-thumb ng-scope ng-isolate-scope mb-avatar"><span class="thumbnail-2d-container"> <img class="ng-scope ng-isolate-scope" src="https://cdn.discordapp.com/attachments/1126219611365458010/1138083482455781426/Png.png"></span></thumbnail-2d> </span> </div><div class="header-caption"> <div class="header-names"> <div class="header-title"> <h1 class="profile-name text-overflow"> Nickname </h1> <h1 class="profile-name text-overflow font-header-1"> Nickname </h1> </div><div class="profile-display-name font-caption-body text text-overflow"> @Username </div></div></div></div></div><button class="primary" id="SetBannerButton">Set banner</button></div>`
                         
-                        BannerPopup.className = "setup";
+                        const marketplaceData = chrome.runtime.getURL("/html/marketplace.html");
+                        const marketplaceStyle = chrome.runtime.getURL("/css/marketplace.css");
+
+                        fetch(marketplaceStyle).then((response) => {
+                            response.text().then((res) => {
+                                const style = document.createElement('style');
+                                style.textContent = res;
+                                document.head.append(style);
+                                fetch(marketplaceData).then((response) => {
+                                    response.text().then((res) => {
+                                        Marketplace.innerHTML = res;
+                                    });
+                                });
+                            });
+                        });
+                        
                         document.body.style.overflow = "hidden";
-                        document.getElementsByTagName("html")[0].insertBefore(BannerPopup, document.getElementsByTagName("html")[0].firstChild);
+                        Marketplace.classList.add("marketplace");
+                        document.getElementsByTagName("html")[0].insertBefore(Marketplace, document.getElementsByTagName("html")[0].firstChild);
     
                         document.querySelector(".mb-b").innerHTML = `<img src='${UserBanners[SelectedBanner]}'>`
             
@@ -274,14 +246,14 @@ setTimeout(() => {
     if (window.location.pathname.startsWith("/users/4186880529") || window.location.pathname.startsWith("/users/651306060")) {
         const div = document.createElement("div");
         document.querySelector(".ng-scope.ng-isolate-scope").classList.add("mb-avatar");
-        div.innerHTML = `<div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="40px" height="40px">CEO of Galaxyblox</div>`;
-        div.classList = "mb-popup"
+        div.innerHTML = `<div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="40px" height="40px">CEO of GalaxyBlox</div>`;
+        div.classList = "mb-popup";
 
         document.querySelector(".profile-header-top").appendChild(div);
     } else if (window.location.pathname.startsWith("/users/")) {
 
         if (CEO) {
-            const userID = window.location.pathname.split("/")[2]
+            const userID = window.location.pathname.split("/")[2];
             const div = document.createElement("div");
             document.querySelector(".ng-scope.ng-isolate-scope").classList.add("mb-avatar");
             div.innerHTML = `<div><img src="https://cdn.discordapp.com/attachments/1137055496155709480/1137347531194503178/MicrobloxRounded.png" width="40px" height="40px">Admin menu </div>`;
@@ -291,7 +263,7 @@ setTimeout(() => {
                 fetch(API_URL + "/users/fetch?user=" + userID).then((res) => {
                     res.text().then((data) => {
                         if (data == "404" || JSON.parse(data)["banned"] == false) {
-                            button.textContent = "Ban from Galaxyblox"
+                            button.textContent = "Ban from GalaxyBlox"
                             button.style.marginLeft = "10px";
                             button.onclick = () => {
                                 const reason = prompt("Type reason.")
@@ -300,7 +272,7 @@ setTimeout(() => {
                                 CheckBanOption();
                             };
                         } else if (JSON.parse(data)["banned"] == true) {
-                            button.textContent = "Unban from Galaxyblox"
+                            button.textContent = "Unban from GalaxyBlox"
                             button.style.marginLeft = "10px";
                             button.onclick = () => {
                                 fetch(API_URL + "/users/unban?user=" + userID);
@@ -317,13 +289,24 @@ setTimeout(() => {
         }
     }
 
+    
+
 }, 100);
+
+console.log(3 + 5);
 
 setTimeout(() => {
     Array.from(document.querySelectorAll(".game-card-link")).forEach((card) => {
         const s = document.createElement("a");
         s.href = "javascript:;";
+        s.classList.add("quickPlay");
         s.innerHTML = `<button class="btn-common-play-game-lg min" onclick="Roblox.GameLauncher.joinPrivateGame('${new URLSearchParams(card.href).get("placeId")}', '', null);"><svg fill="currentColor" width="50px" height="20px" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PlayArrowRoundedIcon"><path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z"></path></svg></button>`;
         card.children[0].appendChild(s);
+
+        // const p = document.createElement("a");
+        // p.href = "javascript:;";
+        // p.classList.add("pin");
+        // p.innerHTML = `<button class="btn-common-play-game-lg min" onclick="Roblox.GameLauncher.joinPrivateGame('${new URLSearchParams(card.href).get("placeId")}', '', null);"><svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M19 12.87c0-.47-.34-.85-.8-.98C16.93 11.54 16 10.38 16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.38-.93 2.54-2.2 2.89-.46.13-.8.51-.8.98V13c0 .55.45 1 1 1h4.98l.02 7c0 .55.45 1 1 1s1-.45 1-1l-.02-7H18c.55 0 1-.45 1-1v-.13z"></path></svg></button>`
+        // card.children[0].appendChild(p);
     });
 }, 1500);

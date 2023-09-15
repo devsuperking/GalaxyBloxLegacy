@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Galaxyblox - enhance Roblox experience",
-    "description": "Galaxyblox is an extension that extends the Roblox website with new possibilities. Created by Microplay Interactive.",
-    "version": "1.20",
+    "name": "GalaxyBlox - Enhance Roblox experience",
+    "description": "GalaxyBlox adds new improvements, optimizations and features to the Roblox website which has a new interface.",
+    "version": "1.40",
     "content_scripts": [
         {
             "css": ["css/global.css", "css/font.css"],
@@ -11,7 +11,8 @@
                 "*://www.roblox.com/*",
                 "*://web.roblox.com/*"
             ],
-            "runAt": "document_end"
+            "all_frames": true,
+            "runAt": "document_start"
         },
         {
             "js": ["js/settings.js"],
@@ -32,5 +33,9 @@
     },
     "permissions": [
         "storage"
-    ]
+    ],
+    "web_accessible_resources": [{ 
+        "resources": ["/html/marketplace.html", "/css/marketplace.css"],
+        "matches": ["<all_urls>"]
+    }]
 }
