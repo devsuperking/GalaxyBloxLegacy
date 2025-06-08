@@ -1,23 +1,23 @@
 # GalaxyBlox Legacy
 
-Rozszerzenie Chrome dla Roblox (v2.00 legacy)
+A Chrome extension for Roblox (v2.00 Legacy).
 
-## Funkcje
-- Nowy motyw i UI  
-- Własny kursor, bannery profili  
-- Przelicza Robux → realne pieniądze  
-- Quick Play, centralne GalaxyHub
+## Features
+- New theme and UI
+- Custom cursor, profile banners
+- Robux-to-USD converter
+- Quick Play and GalaxyHub panel
 
-## Instalacja
-1. Zainstaluj z Chrome Web Store  
-2. Odśwież stronę Roblox
+## Installation
+1. Install from Chrome Web Store  
+2. Refresh the Roblox website
 
-## Wersja 2.00 (17 lutego 2024)
-- GalaxyHub, pluginy, panel dev, odznaki, bannery profilu
+## Version 2.00 (Feb 17, 2024)
+- Added GalaxyHub, plugins, badges, profile customization
 
-## Dane techniczne
-- Rozmiar: 281 KiB  
-- Ocena: ok. 4.2/5 (49 ocen)
+## Info
+- Size: 281 KiB  
+- Rating: ~4.2/5 (49 reviews)
 
-## Kontakt
+## Contact
 Microplay Interactive – support@microplay.net
